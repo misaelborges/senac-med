@@ -18,3 +18,5 @@ build/
 # Other
 *.iml
 nb-javac.properties
+/target/
+/nbproject/
