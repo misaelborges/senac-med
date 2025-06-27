@@ -1,22 +1,42 @@
-# NetBeans files
-.netbeans/
+# Ignore arquivos e pastas do NetBeans
 nbproject/private/
-
-# Build files
-dist/
 build/
+nbbuild/
+dist/
+.nb-gradle/
+*.orig
+
+# Logs
+*.log
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Compilados Java
 *.class
 *.jar
 *.war
+*.ear
 
-# Temporary files
-*.log
+# Arquivos do editor
+*.swp
+*~
 *.bak
-#*#
-.~*
 
-# Other
+# Diretórios de cache do NetBeans
+.netbeans/
+
+# Arquivos Maven (caso use Maven)
+target/
+
+# Arquivos Gradle (caso use Gradle)
+.gradle/
+build/
+
+# Arquivos de IDEs (caso abra com outras IDEs)
+.idea/
 *.iml
-nb-javac.properties
-/target/
-/nbproject/
+
+# Outras configurações locais
+*.env
