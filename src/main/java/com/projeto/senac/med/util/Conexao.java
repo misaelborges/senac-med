@@ -4,10 +4,27 @@
  */
 package com.projeto.senac.med.util;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import com.projeto.senac.med.exception.FalhaNaConexaoException;
+
 /**
  *
  * @author mizael
  */
 public class Conexao {
     
+    private static final String URL = "jdbc:mysql://localhost:3306/senac-med";
+    private static final String USUARIO = "root";
+    private static final String SENHA = "admin";
+    
+    public static Connection conectar() {
+        try {
+            return DriverManager.getConnection(URL, USUARIO, SENHA);
+        } catch (SQLException e) {
+            throw new FalhaNaConexaoException("Erro ao conectar ao banco de dados", e);
+        }
+    }
 }
