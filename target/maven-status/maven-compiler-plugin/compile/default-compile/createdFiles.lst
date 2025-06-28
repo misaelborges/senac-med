@@ -1,4 +1,5 @@
 com\projeto\senac\med\view\CadastroMedico.class
+com\projeto\senac\med\view\CadastroPaciente$7.class
 com\projeto\senac\med\view\Agendamentos$5.class
 com\projeto\senac\med\view\SenacMed$6.class
 com\projeto\senac\med\view\CadastroMedico$5.class
@@ -10,6 +11,7 @@ com\projeto\senac\med\view\SenacMed$4.class
 com\projeto\senac\med\view\Agendamentos$3.class
 com\projeto\senac\med\view\CadastroPaciente$3.class
 com\projeto\senac\med\view\CadastroMedico$3.class
+com\projeto\senac\med\view\CadastroPaciente$8.class
 com\projeto\senac\med\view\CadastroMedico$8.class
 com\projeto\senac\med\model\Paciente.class
 com\projeto\senac\med\view\CadastroMedico$10.class
@@ -31,6 +33,7 @@ com\projeto\senac\med\view\CadastroMedico$1.class
 com\projeto\senac\med\view\CadastroMedico$7.class
 com\projeto\senac\med\view\CadastroPaciente$4.class
 com\projeto\senac\med\util\Conexao.class
+com\projeto\senac\med\view\CadastroPaciente$9.class
 com\projeto\senac\med\view\Agendamentos.class
 com\projeto\senac\med\view\Agendamentos$2.class
 com\projeto\senac\med\view\SenacMed$3.class
