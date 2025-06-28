@@ -16,7 +16,7 @@ import com.projeto.senac.med.exception.FalhaNaConexaoException;
  */
 public class Conexao {
     
-    private static final String URL = "jdbc:mysql://localhost:3306/senac-med";
+    private static final String URL = "jdbc:mysql://localhost:3306/senacmed_db";
     private static final String USUARIO = "root";
     private static final String SENHA = "admin";
     
