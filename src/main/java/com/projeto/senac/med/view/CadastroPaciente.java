@@ -4,6 +4,7 @@
  */
 package com.projeto.senac.med.view;
 
+import com.projeto.senac.med.model.Endereco;
 import com.projeto.senac.med.model.Paciente;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
@@ -357,8 +358,11 @@ public class CadastroPaciente extends javax.swing.JFrame {
         txtTelefone.getText();
         
         Paciente paciente = new Paciente(nome, cpf, dataNacimento);
-        
+        Endereco endereco = new Endereco(nome, ERROR, cpf, cpf, cpf, cpf, Long.MIN_VALUE, Long.MIN_VALUE);
+            
+        System.out.println(endereco);
         System.out.println(paciente);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoActionPerformed
