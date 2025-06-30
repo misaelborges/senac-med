@@ -4,27 +4,24 @@
  */
 package com.projeto.senac.med.model;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 /**
  *
- * @author mizael
+ * @author suzan
  */
-public class Paciente {
+public class Telefone {
     
     private Long id;
-    private String nome;
-    private String cpf;
-    private LocalDate dataNascimento;
+    private String numero;
+    private Paciente paciente;
 
-    public Paciente() {
+    public Telefone() {
     }
 
-    public Paciente(String nome, String cpf, LocalDate dataNascimento) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
+    public Telefone(String numero, Paciente paciente) {
+        this.numero = numero;
+        this.paciente = paciente;
     }
 
     public Long getId() {
@@ -35,34 +32,26 @@ public class Paciente {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
-    public String getCpf() {
-        return cpf;
+    public Paciente getPaciente() {
+        return paciente;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -77,12 +66,10 @@ public class Paciente {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Paciente other = (Paciente) obj;
+        final Telefone other = (Telefone) obj;
         return Objects.equals(this.id, other.id);
     }
     
     
-    
-   
     
 }

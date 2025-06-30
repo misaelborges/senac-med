@@ -4,6 +4,8 @@
  */
 package com.projeto.senac.med.view;
 
+import com.projeto.senac.med.model.Paciente;
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
 /**
@@ -343,16 +345,20 @@ public class CadastroPaciente extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "Paciente cadastrado com sucesso!");
         
-        txtNomePaciente.setText("");
-        txtCPFPaciente.setText("");
-        txtDataNasc.setText("");
-        txtcep.setText("");
-        txtEstado.setText("");
-        txtCidade.setText("");
-        txtBairro.setText("");
-        txtLogradouro.setText("");
-        txtNumero.setText("");
-        txtTelefone.setText("");
+        String nome = txtNomePaciente.getText();
+        String cpf = txtCPFPaciente.getText();
+        LocalDate dataNacimento = LocalDate.parse(txtDataNasc.getText());
+        txtcep.getText();
+        txtEstado.getText();
+        txtCidade.getText();
+        txtBairro.getText();
+        txtLogradouro.getText();
+        txtNumero.getText();
+        txtTelefone.getText();
+        
+        Paciente paciente = new Paciente(nome, cpf, dataNacimento);
+        
+        System.out.println(paciente);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoActionPerformed
