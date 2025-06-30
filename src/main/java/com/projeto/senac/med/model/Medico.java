@@ -9,5 +9,10 @@ package com.projeto.senac.med.model;
  * @author mizael
  */
 public class Medico {
-   
+   private Long id;
+   private String nome;
+   private String cpf;
+   private String crm;
+   private Endereco endereco;
+   private Telefone telefone;
 }
