@@ -12,6 +12,8 @@ import java.util.Objects;
  */
 public class Telefone {
     
+    //TODO
+    
     private Long id;
     private String numero;
     private Paciente paciente;
