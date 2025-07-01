@@ -424,6 +424,17 @@ public class CadastroPaciente extends javax.swing.JFrame {
             telefoneDAO.salvar(telefone);
 
             JOptionPane.showMessageDialog(this, "Paciente cadastrado com sucesso!");
+            
+            txtNomePaciente.setText("");
+            txtCPFPaciente.setText("");
+            txtDataNasc.setText("");
+            txtcep.setText("");
+            txtEstado.setText("");
+            txtCidade.setText("");
+            txtBairro.setText("");
+            txtLogradouro.setText("");
+            txtNumero.setText("");
+            txtTelefone.setText("");
             connection.commit();
         } catch (SQLException e) {
             try {
