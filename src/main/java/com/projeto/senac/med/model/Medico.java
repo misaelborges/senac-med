@@ -4,6 +4,8 @@
  */
 package com.projeto.senac.med.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author mizael
@@ -15,4 +17,86 @@ public class Medico {
    private String crm;
    private Endereco endereco;
    private Telefone telefone;
+
+    public Medico() {
+    }
+
+    public Medico(String nome, String cpf, String crm, Endereco endereco, Telefone telefone) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.crm = crm;
+        this.endereco = endereco;
+        this.telefone = telefone;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getCrm() {
+        return crm;
+    }
+
+    public void setCrm(String crm) {
+        this.crm = crm;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public Telefone getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(Telefone telefone) {
+        this.telefone = telefone;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Medico other = (Medico) obj;
+        return Objects.equals(this.id, other.id);
+    }
+   
 }

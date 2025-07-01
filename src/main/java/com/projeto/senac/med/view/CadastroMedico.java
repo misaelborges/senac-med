@@ -397,7 +397,10 @@ public class CadastroMedico extends javax.swing.JFrame {
          if(txtTelefone.getText().isBlank()){
             JOptionPane.showMessageDialog(null,"O Campo Telefone não pode estar vazio!", "Atenção",0);
             return;
-        }               
+        }       
+        
+         
+         
         JOptionPane.showMessageDialog(this, "Médico cadastrado com sucesso!");
         txtNomeMedico.setText("");
         txtCPFmedico.setText("");
