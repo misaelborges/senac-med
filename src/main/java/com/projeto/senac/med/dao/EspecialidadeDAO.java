@@ -31,7 +31,7 @@ public class EspecialidadeDAO {
             PreparedStatement insert = conexaoDBMysql.prepareStatement(sql);
             insert.setString(1, especialidade.getNome());
             insert.execute();
-            //conexaoDBMysql.commit();
+            conexaoDBMysql.commit();
 
         } catch (Exception e) {
             try {

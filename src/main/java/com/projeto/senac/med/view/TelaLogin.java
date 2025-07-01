@@ -4,16 +4,26 @@
  */
 package com.projeto.senac.med.view;
 
+import com.projeto.senac.med.dao.LoginDAO;
+import com.projeto.senac.med.exception.NegocioException;
+import com.projeto.senac.med.model.Login;
+import com.projeto.senac.med.util.Conexao;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author MURI
  */
-public class Login extends javax.swing.JFrame {
+public class TelaLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
-    public Login() {
+    private final Connection connection = Conexao.conectar();
+
+    public TelaLogin() {
         initComponents();
     }
 
@@ -53,9 +63,19 @@ public class Login extends javax.swing.JFrame {
         btnAcessar.setMnemonic('A');
         btnAcessar.setText("Acessar");
         btnAcessar.setToolTipText("");
+        btnAcessar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAcessarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setMnemonic('C');
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         txtSenha.setName("TxtSenha"); // NOI18N
 
@@ -117,6 +137,45 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarActionPerformed
+        // TODO add your handling code here:
+        if (txtLogin.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Login não pode estar vazio!", "Atenção", 0);
+            return;
+        }
+        char[] password = txtSenha.getPassword();
+        if (password.length == 0) {
+            JOptionPane.showMessageDialog(null, "O Campo Senha não pode estar vazio!", "Atenção", 0);
+            return;
+        }
+        try {
+            String login = txtLogin.getText();
+            String senha = new String(txtSenha.getPassword());
+
+            Login loginObj = new Login(login, senha);
+
+            LoginDAO loginDAO = new LoginDAO(connection);
+            if (loginDAO.buscar(loginObj)) {
+                new SenacMed().setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário ou senha inválido!", "Atenção", 0);
+                limparCampos();
+            }
+
+        } catch (Exception e) {
+            System.getLogger(CadastroPaciente.class.getName()).log(System.Logger.Level.ERROR, (String) null, e);
+            throw new NegocioException("Houve algum erro durante o processamento de dados, entre em contato com o suporte", e);
+        }
+
+
+    }//GEN-LAST:event_btnAcessarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        limparCampos();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -134,24 +193,32 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new TelaLogin().setVisible(true);
             }
         });
     }
 
+    private void limparCampos() {
+        txtLogin.setText("");
+        txtSenha. setText("");
+        txtLogin.requestFocus();
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAcessar;
     private javax.swing.JButton btnCancelar;
