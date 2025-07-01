@@ -15,18 +15,14 @@ public class Medico {
    private String nome;
    private String cpf;
    private String crm;
-   private Endereco endereco;
-   private Telefone telefone;
 
     public Medico() {
     }
 
-    public Medico(String nome, String cpf, String crm, Endereco endereco, Telefone telefone) {
+    public Medico(String nome, String cpf, String crm) {
         this.nome = nome;
         this.cpf = cpf;
         this.crm = crm;
-        this.endereco = endereco;
-        this.telefone = telefone;
     }
 
     public Long getId() {
@@ -59,22 +55,6 @@ public class Medico {
 
     public void setCrm(String crm) {
         this.crm = crm;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public Telefone getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(Telefone telefone) {
-        this.telefone = telefone;
     }
 
     @Override
