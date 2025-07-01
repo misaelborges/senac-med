@@ -12,9 +12,12 @@ import com.projeto.senac.med.model.Endereco;
 import com.projeto.senac.med.model.Paciente;
 import com.projeto.senac.med.model.Telefone;
 import com.projeto.senac.med.util.Conexao;
+import java.awt.HeadlessException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 
 /**
@@ -375,6 +378,8 @@ public class CadastroPaciente extends javax.swing.JFrame {
         }
 
         try {
+            connection.setAutoCommit(false);
+            
             //paciente
             String nome = txtNomePaciente.getText();
             String cpf = txtCPFPaciente.getText();
@@ -419,7 +424,13 @@ public class CadastroPaciente extends javax.swing.JFrame {
             telefoneDAO.salvar(telefone);
 
             JOptionPane.showMessageDialog(this, "Paciente cadastrado com sucesso!");
-        } catch (Exception e) {
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                System.getLogger(CadastroPaciente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
             throw new NegocioException("Houve algum erro durante o processamento de dados, entre em contato com o suporte", e);
         }
 
