@@ -4,10 +4,71 @@
  */
 package com.projeto.senac.med.dao;
 
+import com.projeto.senac.med.exception.ErroAoBuscarMedicoException;
+import com.projeto.senac.med.exception.ErroAoSalvarMedicoException;
+import java.sql.Connection;
+import com.projeto.senac.med.model.Medico;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  *
  * @author mizael
  */
 public class MedicoDAO {
+
+    private final Connection connection;
+
+    public MedicoDAO(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void salvar(Medico medico) {
+
+        String sql = """
+                    INSERT INTO 
+                    medico(nome, cpf, crm)
+                    VALUES(?, ?, ?)
+                    """;
+        
+        try(PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setString(1, medico.getNome());
+            stmt.setString(2, medico.getCpf());
+            stmt.setString(3, medico.getCrm());
+            
+            stmt.executeUpdate();
+            
+            Long medicoId = buscarId(medico);
+            medico.setId(medicoId);
+            
+        } catch (Exception e) {
+            throw new ErroAoSalvarMedicoException("Erro ao salvar o medico: ", e);
+        }
+    }
     
+        public Long buscarId(Medico medico) {
+        String sql = """
+                    SELECT id FROM medico 
+                    WHERE nome = ? AND cpf = ? AND crm = ?
+                    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+             stmt.setString(1, medico.getNome());
+            stmt.setString(2, medico.getCpf());
+            stmt.setString(2, medico.getCrm());
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) medico.setId(resultSet.getLong("id"));
+            
+        } catch (Exception e) {
+            throw new ErroAoBuscarMedicoException("Erro ao buscar o medico : ", e);
+        }
+        
+        return medico.getId();
+
+    }
+
 }

@@ -4,7 +4,19 @@
  */
 package com.projeto.senac.med.view;
 
-import com.formdev.flatlaf.FlatLaf;
+import com.projeto.senac.med.dao.EnderecoDAO;
+import com.projeto.senac.med.dao.EspecialidadeDAO;
+import com.projeto.senac.med.dao.MedicoDAO;
+import com.projeto.senac.med.dao.TelefoneDAO;
+import com.projeto.senac.med.model.Endereco;
+import com.projeto.senac.med.model.Especialidade;
+import com.projeto.senac.med.model.Medico;
+import com.projeto.senac.med.model.Telefone;
+import com.projeto.senac.med.util.Conexao;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,12 +25,14 @@ import javax.swing.JOptionPane;
  */
 public class CadastroMedico extends javax.swing.JFrame {
 
+    private final Connection connection = Conexao.conectar();
+
     /**
      * Creates new form CadastroMedico
      */
     public CadastroMedico() {
         initComponents();
-        
+
     }
 
     /**
@@ -39,7 +53,7 @@ public class CadastroMedico extends javax.swing.JFrame {
         txtNomeMedico = new javax.swing.JTextField();
         txtCPFmedico = new javax.swing.JTextField();
         txtCRMmedico = new javax.swing.JTextField();
-        EspecialidadesMedico = new javax.swing.JComboBox<>();
+        comboEspecialidadesMedico = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -59,9 +73,9 @@ public class CadastroMedico extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtTelefone = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboBoxTipoTelefone = new javax.swing.JComboBox<>();
         lblSegundaEspecialidade = new javax.swing.JLabel();
-        CBSegundaEspecialidade = new javax.swing.JComboBox<>();
+        comboEspecialidadesMedico2 = new javax.swing.JComboBox<>();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -84,10 +98,10 @@ public class CadastroMedico extends javax.swing.JFrame {
             }
         });
 
-        EspecialidadesMedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar opção", "Clínica Geral", "Pediatria", "Ginecologia e Obstetrícia", "Ortopedia", "Cardiologia", "Dermatologia", "Psiquiatria", "Oftalmologia", "Otorrinolaringologia", "Endocrinologia", "Gastroenterologia", "Urologia", "Neurologia", "Reumatologia", "Nefrologia", "Pneumologia", "Infectologia", "Hematologia", "Oncologia", "Anestesiologia" }));
-        EspecialidadesMedico.addActionListener(new java.awt.event.ActionListener() {
+        comboEspecialidadesMedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar opção", "Clínica Geral", "Pediatria", "Ginecologia e Obstetrícia", "Ortopedia", "Cardiologia", "Dermatologia", "Psiquiatria", "Oftalmologia", "Otorrinolaringologia", "Endocrinologia", "Gastroenterologia", "Urologia", "Neurologia", "Reumatologia", "Nefrologia", "Pneumologia", "Infectologia", "Hematologia", "Oncologia", "Anestesiologia" }));
+        comboEspecialidadesMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EspecialidadesMedicoActionPerformed(evt);
+                comboEspecialidadesMedicoActionPerformed(evt);
             }
         });
 
@@ -156,7 +170,7 @@ public class CadastroMedico extends javax.swing.JFrame {
 
         jLabel12.setText("Tipo:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Celular ", "Fixo", "Whatssap" }));
+        comboBoxTipoTelefone.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Celular ", "Fixo", "Whatssap" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -209,7 +223,7 @@ public class CadastroMedico extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(comboBoxTipoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -246,7 +260,7 @@ public class CadastroMedico extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxTipoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addComponent(BtnCadastrarMedico)
                 .addContainerGap(13, Short.MAX_VALUE))
@@ -254,7 +268,7 @@ public class CadastroMedico extends javax.swing.JFrame {
 
         lblSegundaEspecialidade.setText("Segunda Especialidade:");
 
-        CBSegundaEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboEspecialidadesMedico2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -284,8 +298,8 @@ public class CadastroMedico extends javax.swing.JFrame {
                                     .addComponent(lblSegundaEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(EspecialidadesMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(CBSegundaEspecialidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(comboEspecialidadesMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comboEspecialidadesMedico2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(jLabel1))
@@ -314,14 +328,14 @@ public class CadastroMedico extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(EspecialidadesMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboEspecialidadesMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblSegundaEspecialidade)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(CBSegundaEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboEspecialidadesMedico2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -333,9 +347,9 @@ public class CadastroMedico extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeMedicoActionPerformed
 
-    private void EspecialidadesMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EspecialidadesMedicoActionPerformed
+    private void comboEspecialidadesMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEspecialidadesMedicoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_EspecialidadesMedicoActionPerformed
+    }//GEN-LAST:event_comboEspecialidadesMedicoActionPerformed
 
     private void txtLogradouroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLogradouroActionPerformed
         // TODO add your handling code here:
@@ -358,50 +372,111 @@ public class CadastroMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_txtcepActionPerformed
 
     private void BtnCadastrarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCadastrarMedicoActionPerformed
-        if(txtNomeMedico.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Nome não pode estar vazio!", "Atenção",0);
+        if (txtNomeMedico.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Nome não pode estar vazio!", "Atenção", 0);
             return;
         }
-         if(txtCPFmedico.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo CPF não pode estar vazio!", "Atenção",0);
+        if (txtCPFmedico.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo CPF não pode estar vazio!", "Atenção", 0);
             return;
         }
-         if(txtCRMmedico.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo CRM não pode estar vazio!", "Atenção",0);
+        if (txtCRMmedico.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo CRM não pode estar vazio!", "Atenção", 0);
             return;
         }
-         if(txtcep.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo CEP não pode estar vazio!", "Atenção",0);
-            return;
-         } 
-         if(txtEstado.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Estado não pode estar vazio!", "Atenção",0);
-            return;
-        } 
-         if(txtCidade.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Cidade não pode estar vazio!", "Atenção",0);
-            return;
-        } 
-         if(txtBairro.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Bairro não pode estar vazio!", "Atenção",0);
-            return;
-        }         
-         if(txtLogradouro.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Logradouro não pode estar vazio!", "Atenção",0);
+        if (txtcep.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo CEP não pode estar vazio!", "Atenção", 0);
             return;
         }
-         if(txtNumero.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Número não pode estar vazio!", "Atenção",0);
+        if (txtEstado.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Estado não pode estar vazio!", "Atenção", 0);
             return;
         }
-         if(txtTelefone.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Telefone não pode estar vazio!", "Atenção",0);
+        if (txtCidade.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Cidade não pode estar vazio!", "Atenção", 0);
             return;
-        }       
-        
-         
-         
+        }
+        if (txtBairro.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Bairro não pode estar vazio!", "Atenção", 0);
+            return;
+        }
+        if (txtLogradouro.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Logradouro não pode estar vazio!", "Atenção", 0);
+            return;
+        }
+        if (txtNumero.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Número não pode estar vazio!", "Atenção", 0);
+            return;
+        }
+        if (txtTelefone.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Telefone não pode estar vazio!", "Atenção", 0);
+            return;
+        }
+
+        //medico
+        String nome = txtNomeMedico.getText();
+        String cpf = txtCPFmedico.getText();
+        String crm = txtCRMmedico.getText();
+
+        Medico medico = new Medico(nome, cpf, crm);
+        System.out.println(medico);
+        MedicoDAO medicoDAO = new MedicoDAO(connection);
+        medicoDAO.salvar(medico);
+
+        //endereço
+        String cep = txtcep.getText();
+        String estado = txtEstado.getText();
+        String cidade = txtCidade.getText();
+        String bairro = txtBairro.getText();
+        String logradouro = txtLogradouro.getText();
+        Integer numero = Integer.valueOf(txtNumero.getText());
+
+        Endereco endereco = new Endereco();
+        endereco.setLogradouro(logradouro);
+        endereco.setNumero(numero);
+        endereco.setBairro(bairro);
+        endereco.setCidade(cidade);
+        endereco.setEstado(estado);
+        endereco.setCep(cep);
+        endereco.setIdpaciente(medico.getId());
+
+        EnderecoDAO enderecoDAO = new EnderecoDAO(connection);
+        enderecoDAO.salvar(endereco);
+
+        //telefone
+        String numeroTelefone = txtTelefone.getText();
+        DefaultComboBoxModel tiposTelefone = (DefaultComboBoxModel) this.comboBoxTipoTelefone.getModel();
+
+        String tipoTelefone = tiposTelefone.getSelectedItem().toString();
+
+        Telefone telefone = new Telefone();
+        telefone.setNumero(numeroTelefone);
+        telefone.setTipoTelefone(tipoTelefone.toUpperCase());
+        telefone.setIdPaciente(medico.getId());
+
+        TelefoneDAO telefoneDAO = new TelefoneDAO(connection);
+        telefoneDAO.salvar(telefone);
+
+        //especialidade
+        DefaultComboBoxModel comboEspecialidades = (DefaultComboBoxModel) comboEspecialidadesMedico.getModel();
+        DefaultComboBoxModel comboEspecialidades2 = (DefaultComboBoxModel) comboEspecialidadesMedico2.getModel();
+
+        String especialidadeNome = comboEspecialidades.getSelectedItem().toString();
+        String especialidadeNome2 = comboEspecialidades2.getSelectedItem().toString();
+
+        if (!especialidadeNome.equalsIgnoreCase("Selecionar opção")) {
+            
+        }
+
+        Especialidade especialidade = new Especialidade(especialidadeNome);
+        Especialidade SegundaEspecialidade = new Especialidade(especialidadeNome2);
+
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
+        especialidadeDAO.salvar(especialidade);
+        especialidadeDAO.salvar(SegundaEspecialidade);
+
         JOptionPane.showMessageDialog(this, "Médico cadastrado com sucesso!");
+        
         txtNomeMedico.setText("");
         txtCPFmedico.setText("");
         txtCRMmedico.setText("");
@@ -456,12 +531,12 @@ public class CadastroMedico extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCadastrarMedico;
-    private javax.swing.JComboBox<String> CBSegundaEspecialidade;
-    private javax.swing.JComboBox<String> EspecialidadesMedico;
     private javax.swing.JLabel Nome;
     private javax.swing.JLabel Nome1;
+    private javax.swing.JComboBox<String> comboBoxTipoTelefone;
+    private javax.swing.JComboBox<String> comboEspecialidadesMedico;
+    private javax.swing.JComboBox<String> comboEspecialidadesMedico2;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

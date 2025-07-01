@@ -12,6 +12,13 @@ public class Especialidade {
     private Long id;
     private String nome;
 
+    public Especialidade() {
+    }
+
+    public Especialidade(String nome) {
+        this.nome = nome;
+    }
+
     public Long getId() {
         return id;
     }
