@@ -4,9 +4,17 @@
  */
 package com.projeto.senac.med.view;
 
+import com.projeto.senac.med.dao.EnderecoDAO;
+import com.projeto.senac.med.dao.PacienteDAO;
+import com.projeto.senac.med.dao.TelefoneDAO;
+import com.projeto.senac.med.exception.NegocioException;
 import com.projeto.senac.med.model.Endereco;
 import com.projeto.senac.med.model.Paciente;
+import com.projeto.senac.med.model.Telefone;
+import com.projeto.senac.med.util.Conexao;
+import java.sql.Connection;
 import java.time.LocalDate;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +26,8 @@ public class CadastroPaciente extends javax.swing.JFrame {
     /**
      * Creates new form CadastroPaciente
      */
+    private final Connection connection = Conexao.conectar();
+
     public CadastroPaciente() {
         initComponents();
     }
@@ -55,11 +65,11 @@ public class CadastroPaciente extends javax.swing.JFrame {
         txtNumero = new javax.swing.JTextField();
         lblEstado = new javax.swing.JLabel();
         txtEstado = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
         lblTelefone = new javax.swing.JLabel();
         txtTelefone = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        ComboBoxTipoTelefone = new javax.swing.JComboBox<>();
+        comboBoxTipoTelefone = new javax.swing.JComboBox<>();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -128,10 +138,10 @@ public class CadastroPaciente extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Cadastrar Paciente");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setText("Cadastrar Paciente");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSalvarActionPerformed(evt);
             }
         });
 
@@ -145,10 +155,10 @@ public class CadastroPaciente extends javax.swing.JFrame {
 
         jLabel1.setText("Tipo:");
 
-        ComboBoxTipoTelefone.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Celular", "Fixo", "Whatssap" }));
-        ComboBoxTipoTelefone.addActionListener(new java.awt.event.ActionListener() {
+        comboBoxTipoTelefone.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Celular", "Fixo", "Whatssap" }));
+        comboBoxTipoTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBoxTipoTelefoneActionPerformed(evt);
+                comboBoxTipoTelefoneActionPerformed(evt);
             }
         });
 
@@ -161,7 +171,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(btnSalvar)
                         .addGap(21, 21, 21))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -191,7 +201,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
                                                 .addGap(49, 49, 49)
                                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(ComboBoxTipoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(comboBoxTipoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -240,7 +250,6 @@ public class CadastroPaciente extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblLogradouro)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNumero)
                     .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -249,9 +258,9 @@ public class CadastroPaciente extends javax.swing.JFrame {
                     .addComponent(lblTelefone)
                     .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(ComboBoxTipoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxTipoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnSalvar)
                 .addGap(21, 21, 21))
         );
 
@@ -323,68 +332,98 @@ public class CadastroPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    if(txtNomePaciente.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Nome não pode estar vazio!", "Atenção",0);
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if (txtNomePaciente.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Nome não pode estar vazio!", "Atenção", 0);
             return;
         }
-         if(txtCPFPaciente.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo CPF não pode estar vazio!", "Atenção",0);
+        if (txtCPFPaciente.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo CPF não pode estar vazio!", "Atenção", 0);
             return;
         }
-         if(txtDataNasc.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Data de Nascimento não pode estar vazio!", "Atenção",0);
+        if (txtDataNasc.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Data de Nascimento não pode estar vazio!", "Atenção", 0);
             return;
         }
-         if(txtcep.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo CEP não pode estar vazio!", "Atenção",0);
-            return;
-         } 
-         if(txtEstado.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Estado não pode estar vazio!", "Atenção",0);
-            return;
-        } 
-         if(txtCidade.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Cidade não pode estar vazio!", "Atenção",0);
-            return;
-        } 
-         if(txtBairro.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Bairro não pode estar vazio!", "Atenção",0);
-            return;
-        }         
-         if(txtLogradouro.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Logradouro não pode estar vazio!", "Atenção",0);
+        if (txtcep.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo CEP não pode estar vazio!", "Atenção", 0);
             return;
         }
-         if(txtNumero.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Número não pode estar vazio!", "Atenção",0);
+        if (txtEstado.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Estado não pode estar vazio!", "Atenção", 0);
             return;
         }
-         if(txtTelefone.getText().isBlank()){
-            JOptionPane.showMessageDialog(null,"O Campo Telefone não pode estar vazio!", "Atenção",0);
+        if (txtCidade.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Cidade não pode estar vazio!", "Atenção", 0);
             return;
-        }  
+        }
+        if (txtBairro.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Bairro não pode estar vazio!", "Atenção", 0);
+            return;
+        }
+        if (txtLogradouro.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Logradouro não pode estar vazio!", "Atenção", 0);
+            return;
+        }
+        if (txtNumero.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Número não pode estar vazio!", "Atenção", 0);
+            return;
+        }
+        if (txtTelefone.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "O Campo Telefone não pode estar vazio!", "Atenção", 0);
+            return;
+        }
 
-        JOptionPane.showMessageDialog(this, "Paciente cadastrado com sucesso!");
-        
-        String nome = txtNomePaciente.getText();
-        String cpf = txtCPFPaciente.getText();
-        LocalDate dataNacimento = LocalDate.parse(txtDataNasc.getText());
-        txtcep.getText();
-        txtEstado.getText();
-        txtCidade.getText();
-        txtBairro.getText();
-        txtLogradouro.getText();
-        txtNumero.getText();
-        txtTelefone.getText();
-        
-        Paciente paciente = new Paciente(nome, cpf, dataNacimento);
-        Endereco endereco = new Endereco(nome, ERROR, cpf, cpf, cpf, cpf, Long.MIN_VALUE, Long.MIN_VALUE);
-            
-        System.out.println(endereco);
-        System.out.println(paciente);
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+        try {
+            //paciente
+            String nome = txtNomePaciente.getText();
+            String cpf = txtCPFPaciente.getText();
+            LocalDate dataNacimento = LocalDate.parse(txtDataNasc.getText());
+            Paciente paciente = new Paciente(nome, cpf, dataNacimento);
+
+            PacienteDAO pacienteDAO = new PacienteDAO(connection);
+            pacienteDAO.salvar(paciente);
+
+            //endereço
+            String cep = txtcep.getText();
+            String estado = txtEstado.getText();
+            String cidade = txtCidade.getText();
+            String bairro = txtBairro.getText();
+            String logradouro = txtLogradouro.getText();
+            Integer numero = Integer.valueOf(txtNumero.getText());
+
+            Endereco endereco = new Endereco();
+            endereco.setLogradouro(logradouro);
+            endereco.setNumero(numero);
+            endereco.setBairro(bairro);
+            endereco.setCidade(cidade);
+            endereco.setEstado(estado);
+            endereco.setCep(cep);
+            endereco.setIdpaciente(paciente.getId());
+
+            EnderecoDAO enderecoDAO = new EnderecoDAO(connection);
+            enderecoDAO.salvar(endereco);
+
+            //telefone
+            String numeroTelefone = txtTelefone.getText();
+            DefaultComboBoxModel tiposTelefone = (DefaultComboBoxModel) this.comboBoxTipoTelefone.getModel();
+
+            String tipoTelefone = tiposTelefone.getSelectedItem().toString();
+
+            Telefone telefone = new Telefone();
+            telefone.setNumero(numeroTelefone);
+            telefone.setTipoTelefone(tipoTelefone.toUpperCase());
+            telefone.setIdPaciente(paciente.getId());
+
+            TelefoneDAO telefoneDAO = new TelefoneDAO(connection);
+            telefoneDAO.salvar(telefone);
+
+            JOptionPane.showMessageDialog(this, "Paciente cadastrado com sucesso!");
+        } catch (Exception e) {
+            throw new NegocioException("Houve algum erro durante o processamento de dados, entre em contato com o suporte", e);
+        }
+
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void txtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoActionPerformed
         // TODO add your handling code here:
@@ -398,9 +437,9 @@ public class CadastroPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataNascActionPerformed
 
-    private void ComboBoxTipoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTipoTelefoneActionPerformed
+    private void comboBoxTipoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTipoTelefoneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ComboBoxTipoTelefoneActionPerformed
+    }//GEN-LAST:event_comboBoxTipoTelefoneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -439,8 +478,8 @@ public class CadastroPaciente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboBoxTipoTelefone;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> comboBoxTipoTelefone;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JPanel jPanel1;

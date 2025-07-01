@@ -12,26 +12,33 @@ import java.util.Objects;
  */
 public class Endereco {
     private Long id;
-    private String Logradouro;
+    private String logradouro;
     private int numero;
     private String bairro;
     private String cidade;
     private String estado;
     private String cep;
-    private Long idmedico;
-    private Long idpaciente;
+    private Long idMedico;
+    private Long idPaciente;
 
-    public Endereco(String Logradouro, int numero, String bairro, String cidade, String estado, String cep, Long idmedico, Long idpaciente) {
-        this.Logradouro = Logradouro;
+    public Endereco() {
+    }
+    
+    
+
+    public Endereco(String Logradouro, int numero, String bairro, String cidade, String estado, String cep, Long idMedico, Long idPaciente) {
+        this.logradouro = Logradouro;
         this.numero = numero;
         this.bairro = bairro;
         this.cidade = cidade;
         this.estado = estado;
         this.cep = cep;
-        this.idmedico = idmedico;
-        this.idpaciente = idpaciente;
+        this.idMedico = idMedico;
+        this.idPaciente = idPaciente;
     }
 
+    
+    
     public Long getId() {
         return id;
     }
@@ -41,11 +48,11 @@ public class Endereco {
     }
 
     public String getLogradouro() {
-        return Logradouro;
+        return logradouro;
     }
 
     public void setLogradouro(String Logradouro) {
-        this.Logradouro = Logradouro;
+        this.logradouro = Logradouro;
     }
 
     public int getNumero() {
@@ -89,24 +96,24 @@ public class Endereco {
     }
 
     public Long getIdmedico() {
-        return idmedico;
+        return idMedico;
     }
 
-    public void setIdmedico(Long idmedico) {
-        this.idmedico = idmedico;
+    public void setIdmedico(Long idMedico) {
+        this.idMedico = idMedico;
     }
 
     public Long getIdpaciente() {
-        return idpaciente;
+        return idPaciente;
     }
 
-    public void setIdpaciente(Long idpaciente) {
-        this.idpaciente = idpaciente;
+    public void setIdpaciente(Long idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     @Override
     public String toString() {
-        return "Endereco{" + "id=" + id + ", Logradouro=" + Logradouro + ", numero=" + numero + ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado + ", cep=" + cep + ", idmedico=" + idmedico + ", idpaciente=" + idpaciente + '}';
+        return "Endereco{" + "id=" + id + ", Logradouro=" + logradouro + ", numero=" + numero + ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado + ", cep=" + cep + ", idmedico=" + idMedico + ", idpaciente=" + idPaciente + '}';
     }
 
     @Override

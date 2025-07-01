@@ -12,18 +12,19 @@ import java.util.Objects;
  */
 public class Telefone {
     
-    //TODO
-    
     private Long id;
     private String numero;
-    private Paciente paciente;
+    private String tipoTelefone = TipoTelefone.CELULAR.getTipo();
+    private Long idMedico;
+    private Long idPaciente;
 
     public Telefone() {
     }
 
-    public Telefone(String numero, Paciente paciente) {
+    public Telefone(String numero, Long idMedico, Long idPaciente) {
         this.numero = numero;
-        this.paciente = paciente;
+        this.idMedico = idMedico;
+        this.idPaciente = idPaciente;
     }
 
     public Long getId() {
@@ -42,12 +43,28 @@ public class Telefone {
         this.numero = numero;
     }
 
-    public Paciente getPaciente() {
-        return paciente;
+    public String getTipoTelefone() {
+        return tipoTelefone;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setTipoTelefone(String tipoTelefone) {
+        this.tipoTelefone = tipoTelefone;
+    }
+    
+    public Long getIdMedico() {
+        return idMedico;
+    }
+
+    public void setIdMedico(Long idMedico) {
+        this.idMedico = idMedico;
+    }
+
+    public Long getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(Long idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     @Override
@@ -70,8 +87,5 @@ public class Telefone {
         }
         final Telefone other = (Telefone) obj;
         return Objects.equals(this.id, other.id);
-    }
-    
-    
-    
+    }    
 }
