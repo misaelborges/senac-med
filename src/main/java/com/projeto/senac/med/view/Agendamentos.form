@@ -85,11 +85,12 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                       <Component id="jScrollPane3" min="-2" pref="814" max="-2" attributes="0"/>
-                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -100,10 +101,15 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblMedico" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                                  <Component id="lblData" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblMedico" min="-2" pref="60" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblData" min="-2" pref="37" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtMedico" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
@@ -124,6 +130,7 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnBuscaPaciente" pref="123" max="32767" attributes="0"/>
                           <Component id="btnBuscaMedico" max="32767" attributes="0"/>
+                          <Component id="jButton1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="227" max="-2" attributes="0"/>
                   </Group>
@@ -147,17 +154,18 @@
                   <Component id="btnBuscaMedico" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblMedico" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblData" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtData" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblHorario" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblHorario1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ComboBoxStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblHorario1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtHora" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblHorario" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtData" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblData" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="48" max="32767" attributes="0"/>
-              <Component id="jScrollPane3" min="-2" pref="313" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane3" pref="362" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -354,6 +362,14 @@
           <Format format="##:##" subtype="-1" type="5"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="99" red="99" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Agendar"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -11,6 +11,9 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -61,14 +64,41 @@ public class PacienteDAO {
 
             ResultSet resultSet = stmt.executeQuery();
 
-            if (resultSet.next()) paciente.setId(resultSet.getLong("id"));
-            
+            if (resultSet.next()) {
+                paciente.setId(resultSet.getLong("id"));
+            }
+
         } catch (Exception e) {
             throw new ErroAoBuscarPacienteException("Erro ao buscar o paciente: ", e);
         }
-        
+
         return paciente.getId();
 
     }
 
+    public List<Paciente> listar(String nome) throws Exception {
+
+        List<Paciente> list = new ArrayList<>();
+        String sql = "SELECT * FROM paciente WHERE nome LIKE ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+
+            stmt.setString(1, "%" + nome + "%");
+            ResultSet resultado = stmt.executeQuery();
+
+            while (resultado.next()) {
+                Paciente paciente = new Paciente();
+                paciente.setId(resultado.getLong("id"));
+                paciente.setNome(resultado.getString("nome"));
+                paciente.setCpf(resultado.getString("cpf"));
+                list.add(paciente);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao listar pacientes", e);
+
+        }
+
+        return list;
+    }
 }

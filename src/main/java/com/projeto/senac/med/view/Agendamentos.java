@@ -9,7 +9,9 @@ package com.projeto.senac.med.view;
  * @author suzan
  */
 public class Agendamentos extends javax.swing.JFrame {
-
+    private Long idPaciente;
+    private Long idMedico;
+    
     /**
      * Creates new form Agendamentos
      */
@@ -47,6 +49,7 @@ public class Agendamentos extends javax.swing.JFrame {
         lblHorario1 = new javax.swing.JLabel();
         ComboBoxStatus = new javax.swing.JComboBox<>();
         txtHora = new javax.swing.JFormattedTextField();
+        jButton1 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 51));
@@ -200,17 +203,21 @@ public class Agendamentos extends javax.swing.JFrame {
         }
         txtHora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        jButton1.setBackground(new java.awt.Color(153, 153, 255));
+        jButton1.setText("Agendar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 814, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(15, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -219,9 +226,12 @@ public class Agendamentos extends javax.swing.JFrame {
                                 .addComponent(txtPaciente))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblData, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(lblData, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(30, 30, 30)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtMedico)
                                     .addGroup(layout.createSequentialGroup()
@@ -237,7 +247,8 @@ public class Agendamentos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnBuscaPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                            .addComponent(btnBuscaMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnBuscaMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(227, 227, 227))))
         );
         layout.setVerticalGroup(
@@ -254,16 +265,17 @@ public class Agendamentos extends javax.swing.JFrame {
                     .addComponent(txtMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscaMedico)
                     .addComponent(lblMedico))
-                .addGap(18, 18, 18)
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblData)
-                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblHorario)
-                    .addComponent(lblHorario1)
+                    .addComponent(jButton1)
                     .addComponent(ComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHorario1)
+                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHorario)
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblData))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
                 .addGap(22, 22, 22))
         );
 
@@ -284,19 +296,48 @@ public class Agendamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMedicoActionPerformed
 
     private void btnBuscaPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaPacienteActionPerformed
-        // TODO add your handling code here:
         String nome = txtPaciente.getText();
+        
         BuscaPacienteAgendamento buscaPacienteAgendamento = new BuscaPacienteAgendamento(nome);
         buscaPacienteAgendamento.setVisible(true);
-        
+
+        buscaPacienteAgendamento.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                if (buscaPacienteAgendamento != null && buscaPacienteAgendamento.isDataAvailable()) {
+                    String[] pacienteLocalizado = buscaPacienteAgendamento.getDataFromTextField();
+                    txtPaciente.setText(pacienteLocalizado[1]);
+                    idPaciente = Long.parseLong(pacienteLocalizado[0]);
+                    txtMedico.requestFocus();
+                } else {
+                    txtPaciente.setText("");
+                    idPaciente = 0l;
+                }
+            }
+        });
+
     }//GEN-LAST:event_btnBuscaPacienteActionPerformed
 
+
     private void btnBuscaMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaMedicoActionPerformed
-        // TODO add your handling code here:
         String nome = txtMedico.getText();
         BuscaMedicoAgendamento buscaMedicoAgendamento = new BuscaMedicoAgendamento(nome);
         buscaMedicoAgendamento.setVisible(true);
-
+        
+        buscaMedicoAgendamento.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                if (buscaMedicoAgendamento != null && buscaMedicoAgendamento.isDataAvailable()) {
+                    String[] medicoLocalizado = buscaMedicoAgendamento.getDataFromTextField();
+                    txtMedico.setText(medicoLocalizado[1]);
+                    idMedico = Long.parseLong(medicoLocalizado[0]);
+                    txtMedico.requestFocus();
+                } else {
+                    txtMedico.setText("");
+                    idMedico = 0l;
+                }
+            }
+        });
     }//GEN-LAST:event_btnBuscaMedicoActionPerformed
 
     /**
@@ -338,6 +379,7 @@ public class Agendamentos extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ComboBoxStatus;
     private javax.swing.JButton btnBuscaMedico;
     private javax.swing.JButton btnBuscaPaciente;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

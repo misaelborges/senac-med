@@ -4,14 +4,29 @@
  */
 package com.projeto.senac.med.view;
 
+import com.projeto.senac.med.dao.MedicoDAO;
+import com.projeto.senac.med.model.Medico;
+import com.projeto.senac.med.util.Conexao;
+import java.sql.Connection;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MURI
  */
-public class BuscaMedicoAgendamento extends javax.swing.JFrame   {
+public class BuscaMedicoAgendamento extends javax.swing.JFrame {
+
+    private boolean dataAvaliable = false;
+    private String[] dataToReturn = new String[2];
+
+    private final Connection connection = Conexao.conectar();
 
     /**
      * Creates new form BuscaMedicoAgendamento
+     *
      * @param nome
      */
     public BuscaMedicoAgendamento(String nome) {
@@ -37,12 +52,22 @@ public class BuscaMedicoAgendamento extends javax.swing.JFrame   {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Busca Médicos");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblNome.setText("Nome");
 
         btnFiltrar.setText("Filtrar");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -70,15 +95,17 @@ public class BuscaMedicoAgendamento extends javax.swing.JFrame   {
 
         tabelaMedico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "NOME", "CPF", "CRM"
             }
         ));
+        tabelaMedico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaMedicoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaMedico);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,6 +132,26 @@ public class BuscaMedicoAgendamento extends javax.swing.JFrame   {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        carregaTabela();
+    }//GEN-LAST:event_btnFiltrarActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        carregaTabela();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void tabelaMedicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMedicoMouseClicked
+        if (evt.getClickCount() == 1) {
+            int row = tabelaMedico.getSelectedRow();
+            if (row != -1) {
+                dataToReturn[0] = String.valueOf(tabelaMedico.getValueAt(row, 0));
+                dataToReturn[1] = (String) tabelaMedico.getValueAt(row, 1);
+                dataAvaliable = true;
+                dispose();
+            }
+        }
+    }//GEN-LAST:event_tabelaMedicoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -139,6 +186,43 @@ public class BuscaMedicoAgendamento extends javax.swing.JFrame   {
                 //new BuscaMedicoAgendamento().setVisible(true);
             }
         });
+    }
+
+    // Método para JFrameA buscar os dados
+    public String[] getDataFromTextField() {
+        return dataToReturn;
+    }
+
+    // Método para JFrameA verificar se há dados
+    public boolean isDataAvailable() {
+        return dataAvaliable;
+    }
+
+    private void carregaTabela() {
+        String nomeMedico = txtNome.getText();
+        MedicoDAO medicoDAO = new MedicoDAO(connection);
+        
+
+        try {
+            List<Medico> lista = medicoDAO.listar(nomeMedico);
+            DefaultTableModel model = (DefaultTableModel) tabelaMedico.getModel();
+            model.setRowCount(0);
+
+            if (!lista.isEmpty() && model.getRowCount() == 0) {
+                for (Medico medico : lista) {
+                    model.addRow(new Object[]{
+                        medico.getId(),
+                        medico.getNome(),
+                        medico.getCpf(),
+                        medico.getCrm(),});
+                }
+            }
+            txtNome.setText("");
+            txtNome.requestFocus();
+        } catch (Exception ex) {
+            Logger.getLogger(BuscaPacienteAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

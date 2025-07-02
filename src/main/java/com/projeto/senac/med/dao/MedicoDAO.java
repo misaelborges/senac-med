@@ -8,8 +8,11 @@ import com.projeto.senac.med.exception.ErroAoBuscarMedicoException;
 import com.projeto.senac.med.exception.ErroAoSalvarMedicoException;
 import java.sql.Connection;
 import com.projeto.senac.med.model.Medico;
+import com.projeto.senac.med.model.Paciente;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -71,4 +74,26 @@ public class MedicoDAO {
 
     }
 
+    public List<Medico> listar(String nome) throws Exception {
+
+        List<Medico> list = new ArrayList<>();
+        String sql = "SELECT * FROM medico WHERE nome LIKE ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, "%" + nome + "%");
+            ResultSet resultado = stmt.executeQuery();
+
+            while (resultado.next()) {
+                Medico medico = new Medico();
+                medico.setId(resultado.getLong("id"));
+                medico.setNome(resultado.getString("nome"));
+                medico.setCpf(resultado.getString("cpf"));
+                medico.setCrm(resultado.getString("crm"));
+                list.add(medico);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao listar pacientes", e);
+        }
+        return list;
+    }        
 }

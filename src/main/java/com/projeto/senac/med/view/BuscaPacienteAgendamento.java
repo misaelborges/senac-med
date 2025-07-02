@@ -4,14 +4,29 @@
  */
 package com.projeto.senac.med.view;
 
+import com.projeto.senac.med.dao.PacienteDAO;
+import com.projeto.senac.med.model.Paciente;
+import com.projeto.senac.med.util.Conexao;
+import java.sql.Connection;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MURI
  */
-public class BuscaPacienteAgendamento extends javax.swing.JFrame   {
+public class BuscaPacienteAgendamento extends javax.swing.JFrame {
+
+    private boolean dataAvaliable = false;
+    private String[] dataToReturn = new String[2];
+    
+    private final Connection connection = Conexao.conectar();
 
     /**
-     * Creates new form BuscaMedicoAgendamento
+     * Creates new form BuscaPacienteAgendamento
+     *
      * @param nome
      */
     public BuscaPacienteAgendamento(String nome) {
@@ -33,16 +48,26 @@ public class BuscaPacienteAgendamento extends javax.swing.JFrame   {
         txtNome = new javax.swing.JTextField();
         btnFiltrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaMedico = new javax.swing.JTable();
+        tabelaPaciente = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Busca Paciente");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblNome.setText("Nome");
 
         btnFiltrar.setText("Filtrar");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -68,18 +93,20 @@ public class BuscaPacienteAgendamento extends javax.swing.JFrame   {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        tabelaMedico.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaPaciente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "ID", "NOME", "CPF"
             }
         ));
-        jScrollPane1.setViewportView(tabelaMedico);
+        tabelaPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaPacienteMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelaPaciente);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,6 +132,26 @@ public class BuscaPacienteAgendamento extends javax.swing.JFrame   {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tabelaPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPacienteMouseClicked
+        if (evt.getClickCount() == 1) {
+            int row = tabelaPaciente.getSelectedRow();
+            if (row != -1) {
+                dataToReturn[0] = String.valueOf(tabelaPaciente.getValueAt(row, 0));
+                dataToReturn[1] = (String) tabelaPaciente.getValueAt(row, 1);
+                dataAvaliable = true;
+                dispose();
+            }
+        }
+    }//GEN-LAST:event_tabelaPacienteMouseClicked
+
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        carregaTabela();
+    }//GEN-LAST:event_btnFiltrarActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        carregaTabela();
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -137,9 +184,45 @@ public class BuscaPacienteAgendamento extends javax.swing.JFrame   {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new BuscaMedicoAgendamento().setVisible(true);
+                //new BuscaPacienteAgendamento().setVisible(true);
             }
         });
+    }
+
+    // Método para JFrameA buscar os dados
+    public String[] getDataFromTextField() {
+        return dataToReturn;
+    }
+
+    // Método para JFrameA verificar se há dados
+    public boolean isDataAvailable() {
+        return dataAvaliable;
+    }
+
+    private void carregaTabela(){
+        String nomePaciente = txtNome.getText();
+        PacienteDAO pacienteDAO = new PacienteDAO(connection);
+        
+        try {
+            List<Paciente> lista = pacienteDAO.listar(nomePaciente);
+            DefaultTableModel model = (DefaultTableModel) tabelaPaciente.getModel();
+            model.setRowCount(0);
+            
+            if (!lista.isEmpty() && model.getRowCount() == 0) {
+                for (Paciente paciente : lista) {
+                     model.addRow(new Object[]{
+                        paciente.getId(),
+                        paciente.getNome(),
+                        paciente.getCpf(),
+                     });
+                }
+            }
+            txtNome.setText("");
+            txtNome.requestFocus();
+        } catch (Exception ex) {
+            Logger.getLogger(BuscaPacienteAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -147,7 +230,7 @@ public class BuscaPacienteAgendamento extends javax.swing.JFrame   {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblNome;
-    private javax.swing.JTable tabelaMedico;
+    private javax.swing.JTable tabelaPaciente;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 }
