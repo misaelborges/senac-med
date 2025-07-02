@@ -33,23 +33,13 @@ public class SenacMed extends javax.swing.JFrame {
         jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
-        paciente = new javax.swing.JLabel();
-        medico = new javax.swing.JLabel();
-        jComboBoxpaciente = new javax.swing.JComboBox<>();
-        jComboBoxmedico = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        txtHora = new javax.swing.JFormattedTextField();
-        jComboBoxEspecialidades = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        btAgendar = new javax.swing.JButton();
         txtAgendamentoSenacmed = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtdata = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         menuPaciente = new javax.swing.JMenuItem();
         menuMedico = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -67,123 +57,27 @@ public class SenacMed extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
-        paciente.setText("Paciente");
-
-        medico.setText("Médico");
-
-        jComboBoxpaciente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", " ", " " }));
-
-        jComboBoxmedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", " " }));
-
-        jLabel5.setText("Data da consulta:");
-
-        try {
-            txtHora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtHora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        jComboBoxEspecialidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar Opção", "Clínica Geral", "Pediatria", "Ginecologia e Obstetrícia", "Ortopedia", "Cardiologia", "Dermatologia", "Psiquiatria", "Oftalmologia", "Otorrinolaringologia", "Endocrinologia", "Gastroenterologia", "Urologia", "Neurologia", "Reumatologia", "Nefrologia", "Pneumologia", "Infectologia", "Hematologia", "Oncologia", "Anestesiologia" }));
-        jComboBoxEspecialidades.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxEspecialidadesActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Horários");
-
-        btAgendar.setBackground(new java.awt.Color(0, 0, 204));
-        btAgendar.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        btAgendar.setForeground(new java.awt.Color(255, 255, 255));
-        btAgendar.setText("Agendar");
-        btAgendar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAgendarActionPerformed(evt);
-            }
-        });
-
         txtAgendamentoSenacmed.setBackground(new java.awt.Color(0, 102, 102));
         txtAgendamentoSenacmed.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         txtAgendamentoSenacmed.setForeground(new java.awt.Color(0, 102, 102));
         txtAgendamentoSenacmed.setText("Agendamento SenacMed");
-
-        jLabel4.setText("Especialidade:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtAgendamentoSenacmed, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(148, 148, 148))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btAgendar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(medico, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBoxmedico, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(paciente)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBoxpaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtdata, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBoxEspecialidades, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 62, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE)
+                .addComponent(txtAgendamentoSenacmed, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(148, 148, 148))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(txtAgendamentoSenacmed, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(paciente)
-                    .addComponent(jComboBoxpaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxmedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(medico))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBoxEspecialidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel5)
-                        .addComponent(txtdata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(44, 44, 44)
-                .addComponent(btAgendar)
-                .addGap(33, 33, 33))
+                .addContainerGap(330, Short.MAX_VALUE))
         );
-
-        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
         jMenu2.setText("Cadastro");
 
@@ -211,6 +105,15 @@ public class SenacMed extends javax.swing.JFrame {
                 jMenu3ActionPerformed(evt);
             }
         });
+
+        jMenuItem1.setText("Agendar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -236,55 +139,22 @@ public class SenacMed extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBoxEspecialidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEspecialidadesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxEspecialidadesActionPerformed
-
-    private void btAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAgendarActionPerformed
-        String paciente = (String) jComboBoxpaciente.getSelectedItem();
-        String medico = (String) jComboBoxmedico.getSelectedItem();
-        String especialidade = (String) jComboBoxEspecialidades.getSelectedItem();
-        String data = txtdata.getText().trim();
-        String hora = txtHora.getText().trim();
-
-        if (paciente.equals("Selecionar")) {
-            JOptionPane.showMessageDialog(this, "Selecione um paciente.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-        if (medico.equals("Selecionar")) {
-            JOptionPane.showMessageDialog(this, "Selecione um médico.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-         if (especialidade.equals("Selecionar Opção")) {
-            JOptionPane.showMessageDialog(this, "Selecione uma especialidade.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-        if (data.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Informe a data da consulta.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-        if (hora.isEmpty() || hora.equals("  :  ")) {
-            JOptionPane.showMessageDialog(this, "Informe o horário da consulta.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        return;
-    } 
-        JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso!", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_btAgendarActionPerformed
-
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
-new Agendamentos ().setVisible(true);        // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jMenu3ActionPerformed
 
     private void menuPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPacienteActionPerformed
-new CadastroPaciente ().setVisible(true);// TODO add your handling code here:
+        new CadastroPaciente().setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_menuPacienteActionPerformed
 
     private void menuMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMedicoActionPerformed
-new CadastroMedico ().setVisible(true);        // TODO add your handling code here:
+        new CadastroMedico().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_menuMedicoActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        new Agendamentos().setVisible(true);
+    // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -323,27 +193,17 @@ new CadastroMedico ().setVisible(true);        // TODO add your handling code he
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAgendar;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBoxEspecialidades;
-    private javax.swing.JComboBox<String> jComboBoxmedico;
-    private javax.swing.JComboBox<String> jComboBoxpaciente;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
-    private javax.swing.JLabel medico;
     private javax.swing.JMenuItem menuMedico;
     private javax.swing.JMenuItem menuPaciente;
-    private javax.swing.JLabel paciente;
     private javax.swing.JLabel txtAgendamentoSenacmed;
-    private javax.swing.JFormattedTextField txtHora;
-    private javax.swing.JTextField txtdata;
     // End of variables declaration//GEN-END:variables
 }
