@@ -11,6 +11,7 @@ import com.projeto.senac.med.util.Conexao;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -449,7 +450,7 @@ public class Agendamentos extends javax.swing.JFrame {
                     model.addRow(new Object[]{
                         agenda.getNomeMedico(),
                         agenda.getNomePaciente(),
-                        agenda.getData(),
+                        agenda.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                         agenda.getHora(),
                         agenda.getStatus(),});
                 }
