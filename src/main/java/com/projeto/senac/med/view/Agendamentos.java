@@ -4,14 +4,28 @@
  */
 package com.projeto.senac.med.view;
 
+import com.projeto.senac.med.dao.AgendamentoConsultaDAO;
+import com.projeto.senac.med.model.AgendamentoConsulta;
+import com.projeto.senac.med.util.Conexao;
+import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author suzan
  */
 public class Agendamentos extends javax.swing.JFrame {
+
+    private final Connection connection = Conexao.conectar();
     private Long idPaciente;
     private Long idMedico;
-    
+
     /**
      * Creates new form Agendamentos
      */
@@ -36,7 +50,7 @@ public class Agendamentos extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblAgendametos = new javax.swing.JTable();
         lblPaciente = new javax.swing.JLabel();
         lblMedico = new javax.swing.JLabel();
         txtData = new javax.swing.JTextField();
@@ -111,8 +125,8 @@ public class Agendamentos extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        jTable3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblAgendametos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        tblAgendametos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -149,7 +163,7 @@ public class Agendamentos extends javax.swing.JFrame {
                 "Médico", "Paciente", "Data", "Horario", "Status"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(tblAgendametos);
 
         lblPaciente.setText("Paciente");
 
@@ -169,13 +183,18 @@ public class Agendamentos extends javax.swing.JFrame {
 
         lblData.setText("Data");
 
+        btnBuscaPaciente.setBackground(new java.awt.Color(204, 255, 204));
+        btnBuscaPaciente.setMnemonic('P');
         btnBuscaPaciente.setText("Busca Paciente");
+        btnBuscaPaciente.setToolTipText("");
         btnBuscaPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscaPacienteActionPerformed(evt);
             }
         });
 
+        btnBuscaMedico.setBackground(new java.awt.Color(255, 204, 204));
+        btnBuscaMedico.setMnemonic('M');
         btnBuscaMedico.setText("Busca Médico");
         btnBuscaMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,6 +214,7 @@ public class Agendamentos extends javax.swing.JFrame {
 
         ComboBoxStatus.setForeground(new java.awt.Color(0, 0, 204));
         ComboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AGENDADO", "REALIZADO", "CANCELADO", " " }));
+        ComboBoxStatus.setEnabled(false);
 
         try {
             txtHora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -204,7 +224,14 @@ public class Agendamentos extends javax.swing.JFrame {
         txtHora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jButton1.setBackground(new java.awt.Color(153, 153, 255));
+        jButton1.setMnemonic('A');
         jButton1.setText("Agendar");
+        jButton1.setToolTipText("");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -297,7 +324,7 @@ public class Agendamentos extends javax.swing.JFrame {
 
     private void btnBuscaPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaPacienteActionPerformed
         String nome = txtPaciente.getText();
-        
+
         BuscaPacienteAgendamento buscaPacienteAgendamento = new BuscaPacienteAgendamento(nome);
         buscaPacienteAgendamento.setVisible(true);
 
@@ -323,7 +350,7 @@ public class Agendamentos extends javax.swing.JFrame {
         String nome = txtMedico.getText();
         BuscaMedicoAgendamento buscaMedicoAgendamento = new BuscaMedicoAgendamento(nome);
         buscaMedicoAgendamento.setVisible(true);
-        
+
         buscaMedicoAgendamento.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent windowEvent) {
@@ -339,6 +366,27 @@ public class Agendamentos extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_btnBuscaMedicoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        AgendamentoConsulta agendar = new AgendamentoConsulta(LocalDate.MAX, LocalTime.NOON, idMedico, idPaciente);
+        AgendamentoConsultaDAO consultaDAO = new AgendamentoConsultaDAO(connection);
+        DefaultComboBoxModel ComboagendamentoStatus = (DefaultComboBoxModel) this.ComboBoxStatus.getModel();
+
+        LocalDate dataAgendamento = LocalDate.parse(txtData.getText());
+        LocalTime horaAgendamento = LocalTime.parse(txtHora.getText());
+        String status = ComboagendamentoStatus.getSelectedItem().toString();
+        Long idMedico = this.idMedico;
+        Long idPaciente = this.idPaciente;
+
+        agendar.setData(dataAgendamento);
+        agendar.setHora(horaAgendamento);
+        agendar.setStatus(status);
+        agendar.setIdMedico(idMedico);
+        agendar.setIdPaciente(idPaciente);
+        consultaDAO.Salva(agendar);
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,6 +423,30 @@ public class Agendamentos extends javax.swing.JFrame {
         });
     }
 
+    private void carregaTabela() {
+        AgendamentoConsultaDAO listaConsultaDAO = new AgendamentoConsultaDAO(connection);
+
+        try {
+            List<AgendamentoConsulta> lista = listaConsultaDAO.listar();
+            DefaultTableModel model = (DefaultTableModel) tblAgendametos.getModel();
+            model.setRowCount(0);
+
+            if (!lista.isEmpty() && model.getRowCount() == 0) {
+                for (AgendamentoConsulta agenda : lista) {
+                    model.addRow(new Object[]{
+                        agenda.getIdMedico(),
+                        agenda.getIdPaciente(),
+                        agenda.getData(),
+                        agenda.getHora(),
+                        agenda.getStatus(),});
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BuscaPacienteAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxStatus;
     private javax.swing.JButton btnBuscaMedico;
@@ -388,12 +460,12 @@ public class Agendamentos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblHorario;
     private javax.swing.JLabel lblHorario1;
     private javax.swing.JLabel lblMedico;
     private javax.swing.JLabel lblPaciente;
+    private javax.swing.JTable tblAgendametos;
     private javax.swing.JTextField txtData;
     private javax.swing.JFormattedTextField txtHora;
     private javax.swing.JTextField txtMedico;
