@@ -438,7 +438,6 @@ public class CadastroMedico extends javax.swing.JFrame {
             String crm = txtCRMmedico.getText();
 
             Medico medico = new Medico(nome, cpf, crm);
-            System.out.println(medico);
             MedicoDAO medicoDAO = new MedicoDAO(connection);
             medicoDAO.salvar(medico);
 
