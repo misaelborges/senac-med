@@ -6,6 +6,7 @@ package com.projeto.senac.med.view;
 
 import com.projeto.senac.med.dao.AgendamentoConsultaDAO;
 import com.projeto.senac.med.model.AgendamentoConsulta;
+import com.projeto.senac.med.model.AgendamentoConsultaDTO;
 import com.projeto.senac.med.util.Conexao;
 import java.sql.Connection;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -99,6 +101,11 @@ public class Agendamentos extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Agendamentos");
         setBackground(new java.awt.Color(255, 255, 255));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -384,9 +391,15 @@ public class Agendamentos extends javax.swing.JFrame {
         agendar.setIdMedico(idMedico);
         agendar.setIdPaciente(idPaciente);
         consultaDAO.Salva(agendar);
-
+        
+        JOptionPane.showMessageDialog(this, "Agendamento cadastrado com sucesso!!!");
+        carregaTabela();
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        carregaTabela();
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -427,15 +440,15 @@ public class Agendamentos extends javax.swing.JFrame {
         AgendamentoConsultaDAO listaConsultaDAO = new AgendamentoConsultaDAO(connection);
 
         try {
-            List<AgendamentoConsulta> lista = listaConsultaDAO.listar();
+            List<AgendamentoConsultaDTO> lista = listaConsultaDAO.listar();
             DefaultTableModel model = (DefaultTableModel) tblAgendametos.getModel();
             model.setRowCount(0);
 
             if (!lista.isEmpty() && model.getRowCount() == 0) {
-                for (AgendamentoConsulta agenda : lista) {
+                for (AgendamentoConsultaDTO agenda : lista) {
                     model.addRow(new Object[]{
-                        agenda.getIdMedico(),
-                        agenda.getIdPaciente(),
+                        agenda.getNomeMedico(),
+                        agenda.getNomePaciente(),
                         agenda.getData(),
                         agenda.getHora(),
                         agenda.getStatus(),});
