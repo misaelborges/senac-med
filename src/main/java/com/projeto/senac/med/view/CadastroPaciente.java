@@ -15,7 +15,9 @@ import com.projeto.senac.med.util.Conexao;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -376,6 +378,8 @@ public class CadastroPaciente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "O Campo Telefone não pode estar vazio!", "Atenção", 0);
             return;
         }
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         try {
             connection.setAutoCommit(false);
@@ -383,7 +387,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
             //paciente
             String nome = txtNomePaciente.getText();
             String cpf = txtCPFPaciente.getText();
-            LocalDate dataNacimento = LocalDate.parse(txtDataNasc.getText());
+            LocalDate dataNacimento = LocalDate.parse(txtDataNasc.getText(), formatter);
             Paciente paciente = new Paciente(nome, cpf, dataNacimento);
 
             PacienteDAO pacienteDAO = new PacienteDAO(connection);
