@@ -158,28 +158,8 @@
     <Component class="javax.swing.JComboBox" name="comboEspecialidadesMedico">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="21">
+          <StringArray count="1">
             <StringItem index="0" value="Selecionar op&#xe7;&#xe3;o"/>
-            <StringItem index="1" value="Cl&#xed;nica Geral"/>
-            <StringItem index="2" value="Pediatria"/>
-            <StringItem index="3" value="Ginecologia e Obstetr&#xed;cia"/>
-            <StringItem index="4" value="Ortopedia"/>
-            <StringItem index="5" value="Cardiologia"/>
-            <StringItem index="6" value="Dermatologia"/>
-            <StringItem index="7" value="Psiquiatria"/>
-            <StringItem index="8" value="Oftalmologia"/>
-            <StringItem index="9" value="Otorrinolaringologia"/>
-            <StringItem index="10" value="Endocrinologia"/>
-            <StringItem index="11" value="Gastroenterologia"/>
-            <StringItem index="12" value="Urologia"/>
-            <StringItem index="13" value="Neurologia"/>
-            <StringItem index="14" value="Reumatologia"/>
-            <StringItem index="15" value="Nefrologia"/>
-            <StringItem index="16" value="Pneumologia"/>
-            <StringItem index="17" value="Infectologia"/>
-            <StringItem index="18" value="Hematologia"/>
-            <StringItem index="19" value="Oncologia"/>
-            <StringItem index="20" value="Anestesiologia"/>
           </StringArray>
         </Property>
       </Properties>
@@ -434,11 +414,8 @@
     <Component class="javax.swing.JComboBox" name="comboEspecialidadesMedico2">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
+          <StringArray count="1">
+            <StringItem index="0" value="Selecionar op&#xe7;&#xe3;o"/>
           </StringArray>
         </Property>
       </Properties>

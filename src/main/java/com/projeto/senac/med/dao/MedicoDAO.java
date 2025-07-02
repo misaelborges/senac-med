@@ -60,7 +60,7 @@ public class MedicoDAO {
 
              stmt.setString(1, medico.getNome());
             stmt.setString(2, medico.getCpf());
-            stmt.setString(2, medico.getCrm());
+            stmt.setString(3, medico.getCrm());
 
             ResultSet resultSet = stmt.executeQuery();
 

@@ -4,6 +4,7 @@
  */
 package com.projeto.senac.med.dao;
 
+import com.projeto.senac.med.exception.ErroAoBuscarEspecialidadePorNomeException;
 import com.projeto.senac.med.util.Conexao;
 import com.projeto.senac.med.model.Especialidade;
 import java.sql.Connection;
@@ -75,6 +76,24 @@ public class EspecialidadeDAO {
         return especialidadeRetorno;
     }
 
+public Especialidade buscarEspecialidadePorNome(String nome) {
+    Especialidade especialidadeRetorno = new Especialidade();
+
+    String sql = "SELECT * FROM especialidade WHERE nome = ?";
+    try (PreparedStatement statement = conexaoDBMysql.prepareStatement(sql)) {
+        statement.setString(1, nome);
+        ResultSet resultado = statement.executeQuery();
+
+        if (resultado.next()) {
+            especialidadeRetorno.setId(resultado.getLong("id"));
+            especialidadeRetorno.setNome(resultado.getString("nome"));
+        }
+    } catch (SQLException e) {
+        throw new ErroAoBuscarEspecialidadePorNomeException("Erro ao buscar especialidade por nome: ", e);
+    }
+
+    return especialidadeRetorno;
+}
     public void atualizar(Especialidade especialidade) {
         try {
             String sql = "Update especialidade set nome = ? where ID = " + especialidade.getId();

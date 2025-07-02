@@ -7,14 +7,17 @@ package com.projeto.senac.med.view;
 import com.projeto.senac.med.dao.EnderecoDAO;
 import com.projeto.senac.med.dao.EspecialidadeDAO;
 import com.projeto.senac.med.dao.MedicoDAO;
+import com.projeto.senac.med.dao.MedicoEspecialidadeDAO;
 import com.projeto.senac.med.dao.TelefoneDAO;
+import com.projeto.senac.med.exception.NegocioException;
 import com.projeto.senac.med.model.Endereco;
 import com.projeto.senac.med.model.Especialidade;
 import com.projeto.senac.med.model.Medico;
+import com.projeto.senac.med.model.MedicoEspecialidade;
 import com.projeto.senac.med.model.Telefone;
 import com.projeto.senac.med.util.Conexao;
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -32,6 +35,20 @@ public class CadastroMedico extends javax.swing.JFrame {
      */
     public CadastroMedico() {
         initComponents();
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
+        try {
+
+            List<Especialidade> listaEspecialidade = especialidadeDAO.listar();
+
+            DefaultComboBoxModel comboEspecialidades = (DefaultComboBoxModel) comboEspecialidadesMedico.getModel();
+            DefaultComboBoxModel comboEspecialidades2 = (DefaultComboBoxModel) comboEspecialidadesMedico2.getModel();
+
+            listaEspecialidade.forEach(especialidade -> comboEspecialidades.addElement(especialidade.getNome()));
+            listaEspecialidade.forEach(especialidade -> comboEspecialidades2.addElement(especialidade.getNome()));
+
+        } catch (Exception ex) {
+            System.getLogger(CadastroMedico.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
 
     }
 
@@ -98,7 +115,7 @@ public class CadastroMedico extends javax.swing.JFrame {
             }
         });
 
-        comboEspecialidadesMedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar opção", "Clínica Geral", "Pediatria", "Ginecologia e Obstetrícia", "Ortopedia", "Cardiologia", "Dermatologia", "Psiquiatria", "Oftalmologia", "Otorrinolaringologia", "Endocrinologia", "Gastroenterologia", "Urologia", "Neurologia", "Reumatologia", "Nefrologia", "Pneumologia", "Infectologia", "Hematologia", "Oncologia", "Anestesiologia" }));
+        comboEspecialidadesMedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar opção" }));
         comboEspecialidadesMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboEspecialidadesMedicoActionPerformed(evt);
@@ -268,7 +285,7 @@ public class CadastroMedico extends javax.swing.JFrame {
 
         lblSegundaEspecialidade.setText("Segunda Especialidade:");
 
-        comboEspecialidadesMedico2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboEspecialidadesMedico2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar opção" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -413,80 +430,98 @@ public class CadastroMedico extends javax.swing.JFrame {
             return;
         }
 
-        //medico
-        String nome = txtNomeMedico.getText();
-        String cpf = txtCPFmedico.getText();
-        String crm = txtCRMmedico.getText();
+        try {
+            connection.setAutoCommit(false);
+            //medico
+            String nome = txtNomeMedico.getText();
+            String cpf = txtCPFmedico.getText();
+            String crm = txtCRMmedico.getText();
 
-        Medico medico = new Medico(nome, cpf, crm);
-        System.out.println(medico);
-        MedicoDAO medicoDAO = new MedicoDAO(connection);
-        medicoDAO.salvar(medico);
+            Medico medico = new Medico(nome, cpf, crm);
+            System.out.println(medico);
+            MedicoDAO medicoDAO = new MedicoDAO(connection);
+            medicoDAO.salvar(medico);
 
-        //endereço
-        String cep = txtcep.getText();
-        String estado = txtEstado.getText();
-        String cidade = txtCidade.getText();
-        String bairro = txtBairro.getText();
-        String logradouro = txtLogradouro.getText();
-        Integer numero = Integer.valueOf(txtNumero.getText());
+            //endereço
+            String cep = txtcep.getText();
+            String estado = txtEstado.getText();
+            String cidade = txtCidade.getText();
+            String bairro = txtBairro.getText();
+            String logradouro = txtLogradouro.getText();
+            Integer numero = Integer.valueOf(txtNumero.getText());
 
-        Endereco endereco = new Endereco();
-        endereco.setLogradouro(logradouro);
-        endereco.setNumero(numero);
-        endereco.setBairro(bairro);
-        endereco.setCidade(cidade);
-        endereco.setEstado(estado);
-        endereco.setCep(cep);
-        endereco.setIdpaciente(medico.getId());
+            Endereco endereco = new Endereco();
+            endereco.setLogradouro(logradouro);
+            endereco.setNumero(numero);
+            endereco.setBairro(bairro);
+            endereco.setCidade(cidade);
+            endereco.setEstado(estado);
+            endereco.setCep(cep);
+            endereco.setIdmedico(medico.getId());
 
-        EnderecoDAO enderecoDAO = new EnderecoDAO(connection);
-        enderecoDAO.salvar(endereco);
+            EnderecoDAO enderecoDAO = new EnderecoDAO(connection);
+            enderecoDAO.salvar(endereco);
 
-        //telefone
-        String numeroTelefone = txtTelefone.getText();
-        DefaultComboBoxModel tiposTelefone = (DefaultComboBoxModel) this.comboBoxTipoTelefone.getModel();
+            //telefone
+            String numeroTelefone = txtTelefone.getText();
+            DefaultComboBoxModel tiposTelefone = (DefaultComboBoxModel) this.comboBoxTipoTelefone.getModel();
 
-        String tipoTelefone = tiposTelefone.getSelectedItem().toString();
+            String tipoTelefone = tiposTelefone.getSelectedItem().toString();
 
-        Telefone telefone = new Telefone();
-        telefone.setNumero(numeroTelefone);
-        telefone.setTipoTelefone(tipoTelefone.toUpperCase());
-        telefone.setIdPaciente(medico.getId());
+            Telefone telefone = new Telefone();
+            telefone.setNumero(numeroTelefone);
+            telefone.setTipoTelefone(tipoTelefone.toUpperCase());
+            telefone.setIdMedico(medico.getId());
 
-        TelefoneDAO telefoneDAO = new TelefoneDAO(connection);
-        telefoneDAO.salvar(telefone);
+            TelefoneDAO telefoneDAO = new TelefoneDAO(connection);
+            telefoneDAO.salvar(telefone);
 
-        //especialidade
-        DefaultComboBoxModel comboEspecialidades = (DefaultComboBoxModel) comboEspecialidadesMedico.getModel();
-        DefaultComboBoxModel comboEspecialidades2 = (DefaultComboBoxModel) comboEspecialidadesMedico2.getModel();
+            //especialidades
+            EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
 
-        String especialidadeNome = comboEspecialidades.getSelectedItem().toString();
-        String especialidadeNome2 = comboEspecialidades2.getSelectedItem().toString();
+            String nomeEspecialidade = comboEspecialidadesMedico.getSelectedItem().toString();
+            Especialidade especialidadeEncontrada = especialidadeDAO.buscarEspecialidadePorNome(nomeEspecialidade);
 
-        if (!especialidadeNome.equalsIgnoreCase("Selecionar opção")) {
+            String nomeSegundaEspecialidade = comboEspecialidadesMedico2.getSelectedItem().toString();
+            Especialidade segundaEspecialidadeEncontrada = especialidadeDAO.buscarEspecialidadePorNome(nomeSegundaEspecialidade);
+
+            //Medico Especialidde
+            Long medicoId = medico.getId();
+            Long especialidadeId = especialidadeEncontrada.getId();
+            Long segundaEspecialidadeId = segundaEspecialidadeEncontrada.getId();
             
+            MedicoEspecialidade medicoEspecialidade = new MedicoEspecialidade(medicoId, especialidadeId);
+            MedicoEspecialidadeDAO medicoEspecialidadeDAO = new MedicoEspecialidadeDAO(connection);
+            medicoEspecialidadeDAO.salvar(medicoEspecialidade);
+            
+            MedicoEspecialidade medicoEspecialidade2 = new MedicoEspecialidade(medicoId, segundaEspecialidadeId);
+            medicoEspecialidadeDAO.salvar(medicoEspecialidade2);
+
+            JOptionPane.showMessageDialog(this, "Médico cadastrado com sucesso!");
+
+            txtNomeMedico.setText("");
+            txtCPFmedico.setText("");
+            txtCRMmedico.setText("");
+            txtcep.setText("");
+            txtEstado.setText("");
+            txtCidade.setText("");
+            txtBairro.setText("");
+            txtLogradouro.setText("");
+            txtNumero.setText("");
+            txtTelefone.setText("");
+
+            connection.commit();
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                System.getLogger(CadastroMedico.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+
+            throw new NegocioException("Houve algum erro durante o processamento de dados, entre em contato com o suporte", e);
         }
 
-        Especialidade especialidade = new Especialidade(especialidadeNome);
-        Especialidade SegundaEspecialidade = new Especialidade(especialidadeNome2);
 
-        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
-        especialidadeDAO.salvar(especialidade);
-        especialidadeDAO.salvar(SegundaEspecialidade);
-
-        JOptionPane.showMessageDialog(this, "Médico cadastrado com sucesso!");
-        
-        txtNomeMedico.setText("");
-        txtCPFmedico.setText("");
-        txtCRMmedico.setText("");
-        txtcep.setText("");
-        txtEstado.setText("");
-        txtCidade.setText("");
-        txtBairro.setText("");
-        txtLogradouro.setText("");
-        txtNumero.setText("");
-        txtTelefone.setText("");
     }//GEN-LAST:event_BtnCadastrarMedicoActionPerformed
 
     private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
