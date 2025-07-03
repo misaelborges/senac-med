@@ -11,6 +11,7 @@ import com.projeto.senac.med.model.AgendamentoConsultaDTO;
 import java.sql.PreparedStatement;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -53,8 +54,14 @@ public class AgendamentoConsultaDAO {
                 stmt.setNull(5, java.sql.Types.BIGINT);
             }
             stmt.executeUpdate();
+            connection.commit();
             stmt.close();
         } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             throw new ErroAoSalvarAgendamentoException("Erro ao salvar o Agendamento: ", e);
         }
     }
@@ -75,14 +82,14 @@ public class AgendamentoConsultaDAO {
             while (resultado.next()) {
                 AgendamentoConsultaDTO consulta = new AgendamentoConsultaDTO();
                 consulta.setId(resultado.getLong("id"));
-                
+
                 Date dataSql = resultado.getDate("data_ag");
                 if (dataSql != null) {
                     consulta.setData(dataSql.toLocalDate());
                 } else {
                     consulta.setData(LocalDate.MAX);
                 }
-                
+
                 Time horaSql = resultado.getTime("hora");
                 if (horaSql != null) {
                     consulta.setHora(horaSql.toLocalTime());
