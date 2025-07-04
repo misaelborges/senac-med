@@ -18,9 +18,9 @@ public class Conexao {
     
     private static final String URL = "jdbc:mysql://localhost:3306/senacmed_db";
     private static final String USUARIO = "root";
-    //private static final String SENHA = "admin";
+    private static final String SENHA = System.getProperty("DB_PASSWORD");
    // private static final String SENHA = "masterkey";
-    private static final String SENHA = "Juh2025@";
+//    private static final String SENHA = "Juh2025@";
     
     public static Connection conectar() {
         try {
