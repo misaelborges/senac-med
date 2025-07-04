@@ -4,7 +4,18 @@
  */
 package com.projeto.senac.med.view;
 
-import javax.swing.JOptionPane;
+import com.projeto.senac.med.dao.AgendamentoConsultaDAO;
+import com.projeto.senac.med.dao.MedicoDAO;
+import com.projeto.senac.med.dao.PacienteDAO;
+import com.projeto.senac.med.exception.NegocioException;
+import com.projeto.senac.med.model.AgendamentoConsultaDTO;
+import com.projeto.senac.med.model.Medico;
+import com.projeto.senac.med.util.Conexao;
+import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,13 +23,53 @@ import javax.swing.JOptionPane;
  */
 public class SenacMed extends javax.swing.JFrame {
 
+    private Connection connection = Conexao.conectar();
+    private static SenacMed instance;
     /**
      * Creates new form Tela
      */
     public SenacMed() {
         initComponents();
+        carregarTela();
+        instance = this;
     }
 
+    public void carregarTela() {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+
+            AgendamentoConsultaDAO consultaDAO = new AgendamentoConsultaDAO(connection);
+            DefaultTableModel comboAgendamentos = (DefaultTableModel) this.tblAgendametos.getModel();
+            comboAgendamentos.setRowCount(0);
+            LocalDate dataDoDia = LocalDate.now();
+            System.out.println("Data do dia: " + dataDoDia);
+
+            List<AgendamentoConsultaDTO> consultaDTOs = consultaDAO.listar(dataDoDia);
+            
+            for (AgendamentoConsultaDTO consultaDTO : consultaDTOs) {
+                comboAgendamentos.addRow(new Object[]{
+                    consultaDTO.getNomeMedico(),
+                    consultaDTO.getNomePaciente(),
+                    consultaDTO.getData().format(formatter),
+                    consultaDTO.getHora(),
+                    consultaDTO.getStatus()
+                });
+            }
+
+        } catch (Exception e) {
+            throw new NegocioException("Houve algum erro durante o processamento de dados, entre em contato com o suporte", e);
+        }
+    }
+    
+    
+    public static SenacMed getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(SenacMed instance) {
+        SenacMed.instance = instance;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,10 +186,11 @@ public class SenacMed extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ftxtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPesquisa)
-                    .addComponent(lbldata))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(ftxtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbldata)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -217,7 +269,7 @@ public class SenacMed extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         new Agendamentos().setVisible(true);
-    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void ftxtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtDataActionPerformed
