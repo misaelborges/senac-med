@@ -18,8 +18,8 @@ public class Conexao {
     
     private static final String URL = "jdbc:mysql://localhost:3306/senacmed_db";
     private static final String USUARIO = "root";
-    private static final String SENHA = System.getProperty("DB_PASSWORD");
-    
+    //private static final String SENHA = System.getProperty("DB_PASSWORD");  
+    private static final String SENHA ="554410";
     public static Connection conectar() {
         try {
             return DriverManager.getConnection(URL, USUARIO, SENHA);
