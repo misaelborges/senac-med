@@ -10,7 +10,11 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
+<<<<<<< HEAD
                 <exec.vmArgs>-DDB_PASSWORD=admin</exec.vmArgs>
+=======
+                <exec.vmArgs>-DDB_PASSWORD=554410</exec.vmArgs>
+>>>>>>> d7fd82c6f64cdeab72a1676bcfcf42fbb8dd1693
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
                 <exec.mainClass>${packageClassName}</exec.mainClass>
@@ -27,7 +31,11 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
+<<<<<<< HEAD
                 <exec.vmArgs>-DDB_PASSWORD=admin -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
+=======
+                <exec.vmArgs>-DDB_PASSWORD=554410 -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
+>>>>>>> d7fd82c6f64cdeab72a1676bcfcf42fbb8dd1693
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
                 <exec.mainClass>${packageClassName}</exec.mainClass>
@@ -45,7 +53,11 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
+<<<<<<< HEAD
                 <exec.vmArgs>-DDB_PASSWORD=admin</exec.vmArgs>
+=======
+                <exec.vmArgs>-DDB_PASSWORD=554410</exec.vmArgs>
+>>>>>>> d7fd82c6f64cdeab72a1676bcfcf42fbb8dd1693
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.mainClass>${packageClassName}</exec.mainClass>
                 <exec.executable>java</exec.executable>

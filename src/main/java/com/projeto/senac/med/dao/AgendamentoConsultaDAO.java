@@ -16,6 +16,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +78,52 @@ public class AgendamentoConsultaDAO {
                     """;
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet resultado = stmt.executeQuery();
+
+            while (resultado.next()) {
+                AgendamentoConsultaDTO consulta = new AgendamentoConsultaDTO();
+                consulta.setId(resultado.getLong("id"));
+
+                Date dataSql = resultado.getDate("data_ag");
+                if (dataSql != null) {
+                    consulta.setData(dataSql.toLocalDate());
+                } else {
+                    consulta.setData(LocalDate.MAX);
+                }
+
+                Time horaSql = resultado.getTime("hora");
+                if (horaSql != null) {
+                    consulta.setHora(horaSql.toLocalTime());
+                } else {
+                    consulta.setHora(LocalTime.NOON);
+                }
+                consulta.setStatus(resultado.getString("status_ag"));
+                consulta.setIdMedico(resultado.getLong("medico_id"));
+                consulta.setNomeMedico(resultado.getString("medico"));
+                consulta.setIdPaciente(resultado.getLong("paciente_id"));
+                consulta.setNomePaciente(resultado.getString("paciente"));
+                list.add(consulta);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao listar agendamento", e);
+        }
+        return list;
+    }
+
+    public List<AgendamentoConsultaDTO> listar(LocalDate date) throws Exception {
+
+        List<AgendamentoConsultaDTO> list = new ArrayList<>();
+        String sql = """
+                    Select consulta.id, consulta.data_ag, consulta.hora, consulta.status_ag, medico.id as medico_id, medico.nome as medico, paciente.id as  paciente_id,paciente.nome as paciente 
+                    from consulta 
+                    LEFT OUTER JOIN  medico on consulta.id_medico = medico.id
+                    LEFT OUTER JOIN  paciente on consulta.id_paciente = paciente.id
+                    WHERE data_ag = ?;
+                    """;
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setDate(1, Date.valueOf(date));
+            
             ResultSet resultado = stmt.executeQuery();
 
             while (resultado.next()) {

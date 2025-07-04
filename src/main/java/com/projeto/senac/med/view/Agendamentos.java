@@ -28,11 +28,11 @@ import javax.swing.table.DefaultTableModel;
  * @author suzan
  */
 public class Agendamentos extends javax.swing.JFrame {
-
+    
     private final Connection connection = Conexao.conectar();
     private Long idPaciente;
     private Long idMedico;
-
+    
     /**
      * Creates new form Agendamentos
      */
@@ -462,7 +462,7 @@ public class Agendamentos extends javax.swing.JFrame {
             agendar.setIdMedico(idMedico);
             agendar.setIdPaciente(idPaciente);
             consultaDAO.Salva(agendar);
-
+            SenacMed.getInstance().carregarTela();
             JOptionPane.showMessageDialog(this, "Agendamento cadastrado com sucesso!!!");
             limpaCampos();
             carregaTabela();

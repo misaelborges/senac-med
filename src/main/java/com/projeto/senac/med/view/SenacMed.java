@@ -4,7 +4,18 @@
  */
 package com.projeto.senac.med.view;
 
-import javax.swing.JOptionPane;
+import com.projeto.senac.med.dao.AgendamentoConsultaDAO;
+import com.projeto.senac.med.dao.MedicoDAO;
+import com.projeto.senac.med.dao.PacienteDAO;
+import com.projeto.senac.med.exception.NegocioException;
+import com.projeto.senac.med.model.AgendamentoConsultaDTO;
+import com.projeto.senac.med.model.Medico;
+import com.projeto.senac.med.util.Conexao;
+import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,13 +23,53 @@ import javax.swing.JOptionPane;
  */
 public class SenacMed extends javax.swing.JFrame {
 
+    private Connection connection = Conexao.conectar();
+    private static SenacMed instance;
     /**
      * Creates new form Tela
      */
     public SenacMed() {
         initComponents();
+        carregarTela();
+        instance = this;
     }
 
+    public void carregarTela() {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+
+            AgendamentoConsultaDAO consultaDAO = new AgendamentoConsultaDAO(connection);
+            DefaultTableModel comboAgendamentos = (DefaultTableModel) this.tblAgendametos.getModel();
+            comboAgendamentos.setRowCount(0);
+            LocalDate dataDoDia = LocalDate.now();
+            System.out.println("Data do dia: " + dataDoDia);
+
+            List<AgendamentoConsultaDTO> consultaDTOs = consultaDAO.listar(dataDoDia);
+            
+            for (AgendamentoConsultaDTO consultaDTO : consultaDTOs) {
+                comboAgendamentos.addRow(new Object[]{
+                    consultaDTO.getNomeMedico(),
+                    consultaDTO.getNomePaciente(),
+                    consultaDTO.getData().format(formatter),
+                    consultaDTO.getHora(),
+                    consultaDTO.getStatus()
+                });
+            }
+
+        } catch (Exception e) {
+            throw new NegocioException("Houve algum erro durante o processamento de dados, entre em contato com o suporte", e);
+        }
+    }
+    
+    
+    public static SenacMed getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(SenacMed instance) {
+        SenacMed.instance = instance;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,8 +84,13 @@ public class SenacMed extends javax.swing.JFrame {
         jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
-        txtAgendamentoSenacmed = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblAgendametos = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        btnPesquisa = new javax.swing.JButton();
+        ftxtData = new javax.swing.JFormattedTextField();
+        lbldata = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         menuPaciente = new javax.swing.JMenuItem();
@@ -58,13 +114,46 @@ public class SenacMed extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
-        txtAgendamentoSenacmed.setBackground(new java.awt.Color(0, 102, 102));
-        txtAgendamentoSenacmed.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        txtAgendamentoSenacmed.setForeground(new java.awt.Color(0, 102, 102));
-        txtAgendamentoSenacmed.setText("Agendamento SenacMed");
-
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Senacmed 2025.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
+
+        tblAgendametos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        tblAgendametos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Médico", "Paciente", "Data", "Horario", "Status"
+            }
+        ));
+        jScrollPane3.setViewportView(tblAgendametos);
+
+        btnPesquisa.setText("Pesquisar");
+
+        try {
+            ftxtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        ftxtData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ftxtDataActionPerformed(evt);
+            }
+        });
+
+        lbldata.setText("Data:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -72,22 +161,41 @@ public class SenacMed extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(239, 239, 239)
-                        .addComponent(txtAgendamentoSenacmed, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(87, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(326, 326, 326)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(lbldata)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ftxtData, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnPesquisa)))
+                        .addGap(369, 369, 369))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(31, Short.MAX_VALUE))
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(txtAgendamentoSenacmed, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPesquisa)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(ftxtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbldata)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jMenu2.setText("Cadastro");
@@ -133,16 +241,14 @@ public class SenacMed extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -163,8 +269,12 @@ public class SenacMed extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         new Agendamentos().setVisible(true);
-    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void ftxtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ftxtDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,8 +313,11 @@ public class SenacMed extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPesquisa;
+    private javax.swing.JFormattedTextField ftxtData;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -213,8 +326,10 @@ public class SenacMed extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lbldata;
     private javax.swing.JMenuItem menuMedico;
     private javax.swing.JMenuItem menuPaciente;
-    private javax.swing.JLabel txtAgendamentoSenacmed;
+    private javax.swing.JTable tblAgendametos;
     // End of variables declaration//GEN-END:variables
 }
