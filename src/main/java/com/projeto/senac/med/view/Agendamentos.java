@@ -260,6 +260,11 @@ public class Agendamentos extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtData.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDataFocusLost(evt);
+            }
+        });
         txtData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDataActionPerformed(evt);
@@ -370,6 +375,7 @@ public class Agendamentos extends javax.swing.JFrame {
                     String[] pacienteLocalizado = buscaPacienteAgendamento.getDataFromTextField();
                     txtPaciente.setText(pacienteLocalizado[1]);
                     idPaciente = Long.parseLong(pacienteLocalizado[0]);
+                    carregaTabela();
                     txtMedico.requestFocus();
                 } else {
                     txtPaciente.setText("");
@@ -393,6 +399,7 @@ public class Agendamentos extends javax.swing.JFrame {
                     String[] medicoLocalizado = buscaMedicoAgendamento.getDataFromTextField();
                     txtMedico.setText(medicoLocalizado[1]);
                     idMedico = Long.parseLong(medicoLocalizado[0]);
+                    carregaTabela();
                     txtMedico.requestFocus();
                 } else {
                     txtMedico.setText("");
@@ -448,6 +455,7 @@ public class Agendamentos extends javax.swing.JFrame {
             connection.setAutoCommit(false);
             AgendamentoConsulta agendar = new AgendamentoConsulta(LocalDate.MAX, LocalTime.NOON, idMedico, idPaciente);
             AgendamentoConsultaDAO consultaDAO = new AgendamentoConsultaDAO(connection);
+
             DefaultComboBoxModel ComboagendamentoStatus = (DefaultComboBoxModel) this.ComboBoxStatus.getModel();
 
             LocalDate dataAgendamento = LocalDate.parse(txtData.getText(), formatter);
@@ -491,6 +499,16 @@ public class Agendamentos extends javax.swing.JFrame {
     private void txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataActionPerformed
+
+    private void txtDataFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataFocusLost
+        if (!ValidadorData.dataValida(txtData.getText())){
+            JOptionPane.showMessageDialog(null, "A Data é inválida!", "Atenção", 0);
+            carregaTabela();
+            txtData.requestFocus();
+        }else{
+            carregaTabela();
+        }
+    }//GEN-LAST:event_txtDataFocusLost
 
     /**
      * @param args the command line arguments
@@ -548,9 +566,22 @@ public class Agendamentos extends javax.swing.JFrame {
 
     private void carregaTabela() {
         AgendamentoConsultaDAO listaConsultaDAO = new AgendamentoConsultaDAO(connection);
-
+        List<AgendamentoConsultaDTO> lista;
         try {
-            List<AgendamentoConsultaDTO> lista = listaConsultaDAO.listar();
+            if ( (idPaciente != null && idPaciente != 0) && !(idMedico != null && idMedico != 0)) {
+                lista = listaConsultaDAO.listarPorPaciente(idPaciente);
+            } else if ((idPaciente != null && idPaciente != 0) && (idMedico != null && idMedico != 0)){
+                lista = listaConsultaDAO.listarPorPaciente_Medico(idPaciente, idMedico);
+            } else {
+                lista = listaConsultaDAO.listar();
+            }
+            
+            if ((idPaciente != null && idPaciente != 0) && (idMedico != null && idMedico != 0) && (ValidadorData.dataValida(txtData.getText()))){ 
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate dataAgendamento = LocalDate.parse(txtData.getText(), formatter);
+                lista = listaConsultaDAO.listarPorPaciente_Medico_Data(idPaciente, idMedico, dataAgendamento);            
+            }
+            
             DefaultTableModel model = (DefaultTableModel) tblAgendametos.getModel();
             model.setRowCount(0);
 
