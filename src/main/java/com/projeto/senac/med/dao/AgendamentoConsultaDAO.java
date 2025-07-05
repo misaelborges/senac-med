@@ -4,6 +4,7 @@
  */
 package com.projeto.senac.med.dao;
 
+import com.projeto.senac.med.exception.ErroAoListarConsultasException;
 import com.projeto.senac.med.exception.ErroAoSalvarAgendamentoException;
 import java.sql.Connection;
 import com.projeto.senac.med.model.AgendamentoConsulta;
@@ -106,7 +107,7 @@ public class AgendamentoConsultaDAO {
                 list.add(consulta);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao listar agendamento", e);
+            throw new ErroAoListarConsultasException("Erro ao listar agendamento", e);
         }
         return list;
     }
@@ -125,7 +126,7 @@ public class AgendamentoConsultaDAO {
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setDate(1, Date.valueOf(date));
-            
+
             ResultSet resultado = stmt.executeQuery();
 
             while (resultado.next()) {
@@ -153,7 +154,53 @@ public class AgendamentoConsultaDAO {
                 list.add(consulta);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao listar agendamento", e);
+            throw new ErroAoListarConsultasException("Erro ao listar agendamento", e);
+        }
+        return list;
+    }
+
+    public List<AgendamentoConsultaDTO> buscarPorNome(String nome) {
+        String sql = """
+                        Select consulta.id, consulta.data_ag, consulta.hora, consulta.status_ag, medico.id as medico_id, medico.nome as medico, paciente.id as  paciente_id,paciente.nome as paciente 
+                        from consulta 
+                        LEFT OUTER JOIN  medico on consulta.id_medico = medico.id
+                        LEFT OUTER JOIN  paciente on consulta.id_paciente = paciente.id
+                        WHERE paciente.nome LIKE ?;
+                     """;
+
+        List<AgendamentoConsultaDTO> list = new ArrayList<>();
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, "%" + nome + "%");
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                AgendamentoConsultaDTO consulta = new AgendamentoConsultaDTO();
+                consulta.setId(resultSet.getLong("id"));
+
+                Date dataSql = resultSet.getDate("data_ag");
+                if (dataSql != null) {
+                    consulta.setData(dataSql.toLocalDate());
+                } else {
+                    consulta.setData(LocalDate.MAX);
+                }
+
+                Time horaSql = resultSet.getTime("hora");
+                if (horaSql != null) {
+                    consulta.setHora(horaSql.toLocalTime());
+                } else {
+                    consulta.setHora(LocalTime.NOON);
+                }
+                consulta.setStatus(resultSet.getString("status_ag"));
+                consulta.setIdMedico(resultSet.getLong("medico_id"));
+                consulta.setNomeMedico(resultSet.getString("medico"));
+                consulta.setIdPaciente(resultSet.getLong("paciente_id"));
+                consulta.setNomePaciente(resultSet.getString("paciente"));
+                list.add(consulta);
+            }
+        } catch (Exception e) {
+            throw new ErroAoListarConsultasException("Erro ao listar agendamento", e);
         }
         return list;
     }
