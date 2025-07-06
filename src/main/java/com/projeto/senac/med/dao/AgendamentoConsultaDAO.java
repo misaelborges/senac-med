@@ -69,6 +69,28 @@ public class AgendamentoConsultaDAO {
         }
     }
 
+    public void Atualizar(AgendamentoConsulta agendamentoConsulta) {
+        String sql = """
+                     UPDATE consulta set data_ag = ?, hora = ?, status_ag = ? where id = ? ;
+                     """;
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setDate(1, Date.valueOf(agendamentoConsulta.getData()));
+            stmt.setTime(2, Time.valueOf(agendamentoConsulta.getHora()));
+            stmt.setString(3, agendamentoConsulta.getStatus());
+            stmt.setLong(4, agendamentoConsulta.getId());
+            stmt.executeUpdate();
+            connection.commit();
+            stmt.close();
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            throw new ErroAoSalvarAgendamentoException("Erro ao salvar o Agendamento: ", e);
+        }
+    }
+
     public List<AgendamentoConsultaDTO> listar() throws Exception {
 
         List<AgendamentoConsultaDTO> list = new ArrayList<>();
@@ -112,6 +134,49 @@ public class AgendamentoConsultaDAO {
         return list;
     }
 
+    public List<AgendamentoConsultaDTO> listar(long idConsulta) throws Exception {
+
+        List<AgendamentoConsultaDTO> list = new ArrayList<>();
+        String sql = """
+                    Select consulta.id, consulta.data_ag, consulta.hora, consulta.status_ag, medico.id as medico_id, medico.nome as medico, paciente.id as  paciente_id,paciente.nome as paciente 
+                    from consulta 
+                    LEFT OUTER JOIN  medico on consulta.id_medico = medico.id
+                    LEFT OUTER JOIN  paciente on consulta.id_paciente = paciente.id
+                    WHERE consulta.id = idConsulta;
+                    """;
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet resultado = stmt.executeQuery();
+
+            while (resultado.next()) {
+                AgendamentoConsultaDTO consulta = new AgendamentoConsultaDTO();
+                consulta.setId(resultado.getLong("id"));
+
+                Date dataSql = resultado.getDate("data_ag");
+                if (dataSql != null) {
+                    consulta.setData(dataSql.toLocalDate());
+                } else {
+                    consulta.setData(LocalDate.MAX);
+                }
+
+                Time horaSql = resultado.getTime("hora");
+                if (horaSql != null) {
+                    consulta.setHora(horaSql.toLocalTime());
+                } else {
+                    consulta.setHora(LocalTime.NOON);
+                }
+                consulta.setStatus(resultado.getString("status_ag"));
+                consulta.setIdMedico(resultado.getLong("medico_id"));
+                consulta.setNomeMedico(resultado.getString("medico"));
+                consulta.setIdPaciente(resultado.getLong("paciente_id"));
+                consulta.setNomePaciente(resultado.getString("paciente"));
+                list.add(consulta);
+            }
+        } catch (Exception e) {
+            throw new ErroAoListarConsultasException("Erro ao listar agendamento", e);
+        }
+        return list;
+    }
 
     public List<AgendamentoConsultaDTO> listar(LocalDate date) throws Exception {
 
@@ -204,7 +269,7 @@ public class AgendamentoConsultaDAO {
         }
         return list;
     }
-    
+
     public List<AgendamentoConsultaDTO> listarPorPaciente(Long idPaciente) throws Exception {
 
         List<AgendamentoConsultaDTO> list = new ArrayList<>();
@@ -250,7 +315,7 @@ public class AgendamentoConsultaDAO {
         return list;
     }
 
-        public List<AgendamentoConsultaDTO> listarPorMedico(Long idMedico) throws Exception {
+    public List<AgendamentoConsultaDTO> listarPorMedico(Long idMedico) throws Exception {
 
         List<AgendamentoConsultaDTO> list = new ArrayList<>();
         String sql = """
@@ -294,7 +359,7 @@ public class AgendamentoConsultaDAO {
         }
         return list;
     }
-    
+
     public List<AgendamentoConsultaDTO> listarPorPaciente_Medico(Long idPaciente, Long idMedico) throws Exception {
 
         List<AgendamentoConsultaDTO> list = new ArrayList<>();
@@ -433,7 +498,7 @@ public class AgendamentoConsultaDAO {
         }
         return list;
     }
-    
+
     public List<AgendamentoConsultaDTO> listarPorMedico_Data(Long idMedico, LocalDate data) throws Exception {
 
         List<AgendamentoConsultaDTO> list = new ArrayList<>();
@@ -479,6 +544,5 @@ public class AgendamentoConsultaDAO {
         }
         return list;
     }
-    
 
 }

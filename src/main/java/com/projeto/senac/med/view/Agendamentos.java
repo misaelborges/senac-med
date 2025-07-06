@@ -10,6 +10,7 @@ import com.projeto.senac.med.model.AgendamentoConsulta;
 import com.projeto.senac.med.model.AgendamentoConsultaDTO;
 import com.projeto.senac.med.util.Conexao;
 import com.projeto.senac.med.util.ValidadorData;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -21,7 +22,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -173,6 +177,8 @@ public class Agendamentos extends javax.swing.JFrame {
                 "Id", "Médico", "Paciente", "Data", "Horario", "Status"
             }
         ));
+        tblAgendametos.setAutoscrolls(false);
+        tblAgendametos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tblAgendametos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblAgendametosMouseClicked(evt);
@@ -414,7 +420,9 @@ public class Agendamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscaMedicoActionPerformed
 
     private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
-        verificaCampos();
+        if (!verificaCampos()) {
+            return;
+        };
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         try {
@@ -506,18 +514,46 @@ public class Agendamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_tblAgendametosMouseClicked
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        verificaCampos();
+        if (!verificaCampos()) {
+            return;
+        };
 
-        
-        
-        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            connection.setAutoCommit(false);
+            AgendamentoConsulta agendar = new AgendamentoConsulta();
+            AgendamentoConsultaDAO consultaDAO = new AgendamentoConsultaDAO(connection);
+
+            DefaultComboBoxModel ComboagendamentoStatus = (DefaultComboBoxModel) this.comboBoxStatus.getModel();
+
+            LocalDate dataAgendamento = LocalDate.parse(txtData.getText(), formatter);
+            LocalTime horaAgendamento = LocalTime.parse(txtHora.getText());
+            String status = ComboagendamentoStatus.getSelectedItem().toString();
+
+            agendar.setId(idConsulta);
+            agendar.setData(dataAgendamento);
+            agendar.setHora(horaAgendamento);
+            agendar.setStatus(status);
+            consultaDAO.Atualizar(agendar);
+            SenacMed.getInstance().carregarTela();
+            JOptionPane.showMessageDialog(this, "Agendamento atualizado com sucesso!!!");
+            carregaTabelaAll();
+            limpaCampos();
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                System.getLogger(Agendamentos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+            throw new NegocioException("Houve algum erro durante o processamento de dados, entre em contato com o suporte", e);
+        }
         btnAtualizar.setEnabled(false);
         btnAgendar.setEnabled(true);
         comboBoxStatus.setEnabled(false);
         btnBuscaMedico.setEnabled(true);
         btnBuscaPaciente.setEnabled(true);
         txtMedico.setEnabled(true);
-        txtPaciente.setEnabled(true);   
+        txtPaciente.setEnabled(true);
         limpaCampos();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
@@ -647,34 +683,35 @@ public class Agendamentos extends javax.swing.JFrame {
                         agenda.getStatus(),});
                 }
             }
+        ajustarLarguraColunas(tblAgendametos);    
         } catch (Exception ex) {
             Logger.getLogger(Agendamentos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void verificaCampos() {
+    private boolean verificaCampos() {
         if (txtMedico.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "O Campo Médico não pode estar vazio!", "Atenção", 0);
             txtMedico.requestFocus();
-            return;
+            return false;
         }
 
         if (txtPaciente.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "O Campo Paciente não pode estar vazio!", "Atenção", 0);
             txtPaciente.requestFocus();
-            return;
+            return false;
         }
 
         if (!ValidadorData.dataValida(txtData.getText())) {
             JOptionPane.showMessageDialog(null, "A Data é inválida!", "Atenção", 0);
             txtData.requestFocus();
-            return;
+            return false;
         }
 
         if (!horaValida(txtHora.getText())) {
             JOptionPane.showMessageDialog(null, "Hora é invalida!", "Atenção", 0);
             txtHora.requestFocus();
-            return;
+            return false;
         } else {
             LocalTime horaAgendamento = LocalTime.parse(txtHora.getText());
             LocalTime limiteMinimo = LocalTime.of(8, 0);
@@ -684,17 +721,38 @@ public class Agendamentos extends javax.swing.JFrame {
             if (horaAgendamento.isBefore(limiteMinimo) || horaAgendamento.isAfter(limiteMaximo)) {
                 JOptionPane.showMessageDialog(null, "Horário inválido! --> " + horaAgendamento, "Atenção", 0);
                 txtHora.requestFocus();
-                return;
+                return false;
             } else {
                 if (horaAgendamento.isAfter(meioDiaI) && horaAgendamento.isBefore(meioDiaF)) {
                     JOptionPane.showMessageDialog(null, "Horário inválido, Clinica em intervalo de Almoço! --> " + horaAgendamento, "Atenção", 0);
                     txtHora.requestFocus();
-                    return;
+                    return false;
                 }
             }
         }
+        return true;
     }
 
+    public void ajustarLarguraColunas(JTable tabela) {
+        final TableColumnModel modeloColunas = tabela.getColumnModel();
+
+        for (int coluna = 0; coluna < tabela.getColumnCount(); coluna++) {
+            int largura = 15; // Largura mínima
+
+            for (int linha = 0; linha < tabela.getRowCount(); linha++) {
+                TableCellRenderer renderizador = tabela.getCellRenderer(linha, coluna);
+                Component componente = tabela.prepareRenderer(renderizador, linha, coluna);
+                largura = Math.max(componente.getPreferredSize().width + 1, largura);
+            }
+
+            // Limita a largura máxima (opcional)
+            if (largura > 300) {
+                largura = 300;
+            }
+
+            modeloColunas.getColumn(coluna).setPreferredWidth(largura);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgendar;
