@@ -98,6 +98,8 @@ public class SenacMed extends javax.swing.JFrame {
         menuMedico = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -238,6 +240,12 @@ public class SenacMed extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem1);
 
+        jMenu4.setText("Buscar Medico");
+        jMenu3.add(jMenu4);
+
+        jMenu5.setText("Buscar Paciente");
+        jMenu3.add(jMenu5);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -346,6 +354,8 @@ public class SenacMed extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
