@@ -35,6 +35,8 @@ public class CadastroMedico extends javax.swing.JFrame {
      */
     public CadastroMedico() {
         initComponents();
+        configurarTeclaEnter();
+        
         EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
         try {
 
@@ -51,6 +53,23 @@ public class CadastroMedico extends javax.swing.JFrame {
         }
 
     }
+    
+           private void configurarTeclaEnter() {
+            txtNomeMedico.addActionListener(e -> txtFcpf.requestFocusInWindow());
+            txtFcpf.addActionListener(e -> txtCRMmedico.requestFocusInWindow());
+            txtCRMmedico.addActionListener(e -> comboEspecialidadesMedico.requestFocusInWindow());
+            comboEspecialidadesMedico.addActionListener(e -> comboEspecialidadesMedico2.requestFocusInWindow());
+            comboEspecialidadesMedico2.addActionListener(e -> txtEndereco.requestFocusInWindow());
+            txtEndereco.addActionListener(e -> txtBairro.requestFocusInWindow());
+            txtBairro.addActionListener(e -> txtComplemento.requestFocusInWindow());
+            txtComplemento.addActionListener(e -> txtFnumero.requestFocusInWindow());
+            txtFnumero.addActionListener(e -> txtFcep.requestFocusInWindow());
+            txtFcep.addActionListener(e -> txtCidade.requestFocusInWindow());
+            txtCidade.addActionListener(e -> txtFestado.requestFocusInWindow());
+            txtFestado.addActionListener(e -> txtFtelefone1.requestFocusInWindow());
+            txtFtelefone1.addActionListener(e -> txtFtelefone2.requestFocusInWindow());
+            txtFtelefone2.addActionListener(e -> BtnCadastrarMedico.requestFocusInWindow());
+           }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,7 +107,7 @@ public class CadastroMedico extends javax.swing.JFrame {
         comboTelefone1 = new javax.swing.JComboBox<>();
         lblTelefone2 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        Combotelefone2 = new javax.swing.JComboBox<>();
+        comboTelefone2 = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         txtComplemento = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -109,8 +128,9 @@ public class CadastroMedico extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro médico", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 12))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro médico", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 2, 12), new java.awt.Color(0, 51, 51))); // NOI18N
 
+        txtNomeMedico.setBackground(new java.awt.Color(255, 255, 255));
         txtNomeMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeMedicoActionPerformed(evt);
@@ -119,6 +139,7 @@ public class CadastroMedico extends javax.swing.JFrame {
 
         Nome1.setText("Nome");
 
+        txtFcpf.setBackground(new java.awt.Color(255, 255, 255));
         try {
             txtFcpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
@@ -142,6 +163,8 @@ public class CadastroMedico extends javax.swing.JFrame {
                 comboEspecialidadesMedicoActionPerformed(evt);
             }
         });
+
+        txtCRMmedico.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setText("CRM");
 
@@ -193,7 +216,7 @@ public class CadastroMedico extends javax.swing.JFrame {
 
         jLabel14.setText("Tipo");
 
-        Combotelefone2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fixo" }));
+        comboTelefone2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fixo" }));
 
         jLabel15.setText("Complemento");
 
@@ -258,21 +281,29 @@ public class CadastroMedico extends javax.swing.JFrame {
                                         .addComponent(txtFcep, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel15)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(89, 89, 89)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(24, 24, 24)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtFnumero, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(95, 95, 95)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7)
                                     .addComponent(jLabel6)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(190, 190, 190)
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22)
-                                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(18, 18, 18)
+                                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtFestado, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtFnumero, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -288,50 +319,40 @@ public class CadastroMedico extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Combotelefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(comboTelefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(comboTelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(28, 28, 28)
-                                .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64)
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtFestado, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(comboTelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(33, 33, 33)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
                             .addComponent(txtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(txtFnumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(27, 27, 27)
+                            .addComponent(txtFnumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))))
+                .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
                     .addComponent(jLabel10)
                     .addComponent(txtFcep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
                     .addComponent(txtFestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -344,7 +365,7 @@ public class CadastroMedico extends javax.swing.JFrame {
                     .addComponent(lblTelefone2)
                     .addComponent(txtFtelefone2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
-                    .addComponent(Combotelefone2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboTelefone2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -463,6 +484,9 @@ public class CadastroMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_comboEspecialidadesMedicoActionPerformed
 
     private void BtnCadastrarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCadastrarMedicoActionPerformed
+        JOptionPane.showMessageDialog(this, "Médico cadastrado com sucesso!");
+        
+        
         if (txtNomeMedico.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "O Campo Nome não pode estar vazio!", "Atenção", 0);
             return;
@@ -502,6 +526,8 @@ public class CadastroMedico extends javax.swing.JFrame {
         if (txtFtelefone1.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "O Campo Telefone não pode estar vazio!", "Atenção", 0);
             return;
+            
+            
         }
 
         try {
@@ -570,17 +596,9 @@ public class CadastroMedico extends javax.swing.JFrame {
             MedicoEspecialidade medicoEspecialidade2 = new MedicoEspecialidade(medicoId, segundaEspecialidadeId);
             medicoEspecialidadeDAO.salvar(medicoEspecialidade2);
 
-            JOptionPane.showMessageDialog(this, "Médico cadastrado com sucesso!");
+           
 
-            txtNomeMedico.setText("");
-            txtFcpf.setText("");
-            txtCRMmedico.setText("");
-            txtFcep.setText("");
-            txtCidade.setText("");
-            txtBairro.setText("");
-            txtEndereco.setText("");
-            txtFnumero.setText("");
-            txtFtelefone1.setText("");
+            
             
 
             connection.commit();
@@ -600,12 +618,21 @@ public class CadastroMedico extends javax.swing.JFrame {
             txtNomeMedico.setText("");
             txtFcpf.setText("");
             txtCRMmedico.setText("");
-           txtFcep.setText("");
-            txtCidade.setText("");
-            txtBairro.setText("");
+            comboEspecialidadesMedico.setSelectedIndex(0);
+            comboEspecialidadesMedico2.setSelectedIndex(0);
             txtEndereco.setText("");
+            txtBairro.setText("");
+            txtComplemento.setText("");
             txtFnumero.setText("");
+            txtFcep.setText("");
+            txtCidade.setText("");
+            txtFestado.setText("");
             txtFtelefone1.setText("");
+            txtFtelefone2.setText("");
+            comboTelefone1.setSelectedIndex(0);
+            comboTelefone2.setSelectedIndex(0);
+    
+            txtNomeMedico.requestFocusInWindow();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtFcpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFcpfActionPerformed
@@ -674,13 +701,13 @@ public class CadastroMedico extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCadastrarMedico;
-    private javax.swing.JComboBox<String> Combotelefone2;
     private javax.swing.JLabel Nome;
     private javax.swing.JLabel Nome1;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> comboEspecialidadesMedico;
     private javax.swing.JComboBox<String> comboEspecialidadesMedico2;
     private javax.swing.JComboBox<String> comboTelefone1;
+    private javax.swing.JComboBox<String> comboTelefone2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
