@@ -554,7 +554,7 @@ public class CadastroMedico extends javax.swing.JFrame {
             endereco.setCidade(cidade);
             endereco.setEstado(estado);
             endereco.setCep(cep);
-            endereco.setIdpaciente(medico.getId());
+            endereco.setIdmedico(medico.getId());
 
             EnderecoDAO enderecoDAO = new EnderecoDAO(connection);
             enderecoDAO.salvar(endereco);
