@@ -494,12 +494,14 @@ public class Agendamentos extends javax.swing.JFrame {
     private void txtDataFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataFocusLost
         if (!ValidadorData.dataValida(txtData.getText())) {
             JOptionPane.showMessageDialog(null, "A Data é inválida!", "Atenção", 0);
-            carregaTabelaAll();
+            carregaTabela();
             txtData.requestFocus();
         } else {
             if (idMedico != null && idMedico != 0) {
                 carregaTabela();
                 carregaComboHora();
+            }else{
+                carregaTabela();
             }
         }
     }//GEN-LAST:event_txtDataFocusLost
@@ -587,8 +589,10 @@ public class Agendamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void comboHoraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_comboHoraFocusGained
-        carregaComboHora();
-
+            if (idMedico != null && idMedico != 0) {
+                carregaTabela();
+                carregaComboHora();
+            }        
     }//GEN-LAST:event_comboHoraFocusGained
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -600,6 +604,7 @@ public class Agendamentos extends javax.swing.JFrame {
         btnBuscaPaciente.setEnabled(true);
 
         limpaCampos();
+        carregaTabelaAll();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
@@ -648,8 +653,8 @@ public class Agendamentos extends javax.swing.JFrame {
     }
 
     private void limpaCampos() {
-        txtPaciente.setText("");
-        txtMedico.setText("");
+        txtPaciente.setText(null);
+        txtMedico.setText(null);
         txtData.setText("");
         comboHora.removeAllItems();
         comboBoxStatus.setSelectedIndex(0);
