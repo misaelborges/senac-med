@@ -36,7 +36,7 @@ public class CadastroMedico extends javax.swing.JFrame {
     public CadastroMedico() {
         initComponents();
         configurarTeclaEnter();
-        
+
         EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
         try {
 
@@ -53,23 +53,23 @@ public class CadastroMedico extends javax.swing.JFrame {
         }
 
     }
-    
-           private void configurarTeclaEnter() {
-            txtNomeMedico.addActionListener(e -> txtFcpf.requestFocusInWindow());
-            txtFcpf.addActionListener(e -> txtCRMmedico.requestFocusInWindow());
-            txtCRMmedico.addActionListener(e -> comboEspecialidadesMedico.requestFocusInWindow());
-            comboEspecialidadesMedico.addActionListener(e -> comboEspecialidadesMedico2.requestFocusInWindow());
-            comboEspecialidadesMedico2.addActionListener(e -> txtEndereco.requestFocusInWindow());
-            txtEndereco.addActionListener(e -> txtBairro.requestFocusInWindow());
-            txtBairro.addActionListener(e -> txtComplemento.requestFocusInWindow());
-            txtComplemento.addActionListener(e -> txtFnumero.requestFocusInWindow());
-            txtFnumero.addActionListener(e -> txtFcep.requestFocusInWindow());
-            txtFcep.addActionListener(e -> txtCidade.requestFocusInWindow());
-            txtCidade.addActionListener(e -> txtFestado.requestFocusInWindow());
-            txtFestado.addActionListener(e -> txtFtelefone1.requestFocusInWindow());
-            txtFtelefone1.addActionListener(e -> txtFtelefone2.requestFocusInWindow());
-            txtFtelefone2.addActionListener(e -> BtnCadastrarMedico.requestFocusInWindow());
-           }
+
+    private void configurarTeclaEnter() {
+        txtNomeMedico.addActionListener(e -> txtFcpf.requestFocusInWindow());
+        txtFcpf.addActionListener(e -> txtCRMmedico.requestFocusInWindow());
+        txtCRMmedico.addActionListener(e -> comboEspecialidadesMedico.requestFocusInWindow());
+        comboEspecialidadesMedico.addActionListener(e -> comboEspecialidadesMedico2.requestFocusInWindow());
+        comboEspecialidadesMedico2.addActionListener(e -> txtEndereco.requestFocusInWindow());
+        txtEndereco.addActionListener(e -> txtBairro.requestFocusInWindow());
+        txtBairro.addActionListener(e -> txtComplemento.requestFocusInWindow());
+        txtComplemento.addActionListener(e -> txtNumero.requestFocusInWindow());
+        txtNumero.addActionListener(e -> txtCep.requestFocusInWindow());
+        txtCep.addActionListener(e -> txtCidade.requestFocusInWindow());
+        txtCidade.addActionListener(e -> txtEstado.requestFocusInWindow());
+        txtEstado.addActionListener(e -> txtTelefone1.requestFocusInWindow());
+        txtTelefone1.addActionListener(e -> txtFtelefone2.requestFocusInWindow());
+        txtFtelefone2.addActionListener(e -> BtnCadastrarMedico.requestFocusInWindow());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -111,11 +111,11 @@ public class CadastroMedico extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         txtComplemento = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtFtelefone1 = new javax.swing.JFormattedTextField();
+        txtTelefone1 = new javax.swing.JFormattedTextField();
         txtFtelefone2 = new javax.swing.JFormattedTextField();
-        txtFcep = new javax.swing.JFormattedTextField();
-        txtFnumero = new javax.swing.JFormattedTextField();
-        txtFestado = new javax.swing.JFormattedTextField();
+        txtCep = new javax.swing.JFormattedTextField();
+        txtNumero = new javax.swing.JFormattedTextField();
+        txtEstado = new javax.swing.JFormattedTextField();
         BtnCadastrarMedico = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -229,7 +229,7 @@ public class CadastroMedico extends javax.swing.JFrame {
         jLabel9.setText("Estado");
 
         try {
-            txtFtelefone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+            txtTelefone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -241,24 +241,24 @@ public class CadastroMedico extends javax.swing.JFrame {
         }
 
         try {
-            txtFcep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+            txtCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        txtFcep.addActionListener(new java.awt.event.ActionListener() {
+        txtCep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFcepActionPerformed(evt);
+                txtCepActionPerformed(evt);
             }
         });
 
         try {
-            txtFnumero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####")));
+            txtNumero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
         try {
-            txtFestado.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UU")));
+            txtEstado.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UU")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -278,7 +278,7 @@ public class CadastroMedico extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(2, 2, 2)
-                                        .addComponent(txtFcep, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel15)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -301,15 +301,15 @@ public class CadastroMedico extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtFestado, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtFnumero, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblTelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(14, 14, 14)
-                                .addComponent(txtFtelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtTelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblTelefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -344,22 +344,22 @@ public class CadastroMedico extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFnumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(txtFcep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(txtFestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelefone1)
                     .addComponent(jLabel12)
                     .addComponent(comboTelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFtelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelefone2)
@@ -484,9 +484,7 @@ public class CadastroMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_comboEspecialidadesMedicoActionPerformed
 
     private void BtnCadastrarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCadastrarMedicoActionPerformed
-        JOptionPane.showMessageDialog(this, "Médico cadastrado com sucesso!");
-        
-        
+
         if (txtNomeMedico.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "O Campo Nome não pode estar vazio!", "Atenção", 0);
             return;
@@ -499,11 +497,11 @@ public class CadastroMedico extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "O Campo CRM não pode estar vazio!", "Atenção", 0);
             return;
         }
-        if (txtFcep.getText().isBlank()) {
+        if (txtCep.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "O Campo CEP não pode estar vazio!", "Atenção", 0);
             return;
         }
-        if (txtFestado.getText().isBlank()) {
+        if (txtEstado.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "O Campo Estado não pode estar vazio!", "Atenção", 0);
             return;
         }
@@ -519,35 +517,35 @@ public class CadastroMedico extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "O Campo Logradouro não pode estar vazio!", "Atenção", 0);
             return;
         }
-        if (txtFnumero.getText().isBlank()) {
+        if (txtNumero.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "O Campo Número não pode estar vazio!", "Atenção", 0);
             return;
         }
-        if (txtFtelefone1.getText().isBlank()) {
+        if (txtTelefone1.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "O Campo Telefone não pode estar vazio!", "Atenção", 0);
             return;
-            
-            
+
         }
 
         try {
             connection.setAutoCommit(false);
             //medico
             String nome = txtNomeMedico.getText();
-            String cpf = txtFcpf.getText();
+            String cpfComMascara = txtFcpf.getText();
             String crm = txtCRMmedico.getText();
-
+            String cpf = cpfComMascara.replaceAll("[^\\d]", ""); // remove tudo oque não for numero
             Medico medico = new Medico(nome, cpf, crm);
             MedicoDAO medicoDAO = new MedicoDAO(connection);
             medicoDAO.salvar(medico);
 
             //endereço
-            String cep = txtFcep.getText();
-            String estado = txtFestado.getText();
+            String cepComMascara = txtCep.getText();
+            String cep = cepComMascara.replaceAll("[^\\d]", "");
+            String estado = txtEstado.getText();
             String cidade = txtCidade.getText();
             String bairro = txtBairro.getText();
             String logradouro = txtEndereco.getText();
-            Integer numero = Integer.valueOf(txtFnumero.getText());
+            Integer numero = Integer.valueOf(txtNumero.getText());
 
             Endereco endereco = new Endereco();
             endereco.setLogradouro(logradouro);
@@ -556,24 +554,34 @@ public class CadastroMedico extends javax.swing.JFrame {
             endereco.setCidade(cidade);
             endereco.setEstado(estado);
             endereco.setCep(cep);
-            endereco.setIdmedico(medico.getId());
+            endereco.setIdpaciente(medico.getId());
 
             EnderecoDAO enderecoDAO = new EnderecoDAO(connection);
             enderecoDAO.salvar(endereco);
 
             //telefone
-            String numeroTelefone = txtFtelefone1.getText();
+            String numeroTelefone = txtTelefone1.getText();
+            String numeroTelefone2 = txtFtelefone2.getText();
+
             DefaultComboBoxModel tiposTelefone = (DefaultComboBoxModel) this.comboTelefone1.getModel();
+            DefaultComboBoxModel tiposTelefone2 = (DefaultComboBoxModel) this.comboTelefone2.getModel();
 
             String tipoTelefone = tiposTelefone.getSelectedItem().toString();
+            String tipoTelefone2 = tiposTelefone2.getSelectedItem().toString();
 
             Telefone telefone = new Telefone();
             telefone.setNumero(numeroTelefone);
             telefone.setTipoTelefone(tipoTelefone.toUpperCase());
             telefone.setIdMedico(medico.getId());
 
+            Telefone telefone2 = new Telefone();
+            telefone2.setNumero(numeroTelefone2);
+            telefone2.setTipoTelefone(tipoTelefone2.toUpperCase());
+            telefone2.setIdMedico(medico.getId());
+
             TelefoneDAO telefoneDAO = new TelefoneDAO(connection);
             telefoneDAO.salvar(telefone);
+            telefoneDAO.salvar(telefone2);
 
             //especialidades
             EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
@@ -596,12 +604,26 @@ public class CadastroMedico extends javax.swing.JFrame {
             MedicoEspecialidade medicoEspecialidade2 = new MedicoEspecialidade(medicoId, segundaEspecialidadeId);
             medicoEspecialidadeDAO.salvar(medicoEspecialidade2);
 
-           
-
-            
-            
+            JOptionPane.showMessageDialog(this, "Médico cadastrado com sucesso!");
 
             connection.commit();
+
+            txtNomeMedico.setText("");
+            txtFcpf.setText("");
+            txtCRMmedico.setText("");
+            comboEspecialidadesMedico.setSelectedIndex(0);
+            comboEspecialidadesMedico2.setSelectedIndex(0);
+            txtEndereco.setText("");
+            txtBairro.setText("");
+            txtComplemento.setText("");
+            txtNumero.setText("");
+            txtCep.setText("");
+            txtCidade.setText("");
+            txtEstado.setText("");
+            txtTelefone1.setText("");
+            txtFtelefone2.setText("");
+            comboTelefone1.setSelectedIndex(0);
+            comboTelefone2.setSelectedIndex(0);
         } catch (Exception e) {
             try {
                 connection.rollback();
@@ -615,33 +637,33 @@ public class CadastroMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnCadastrarMedicoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-            txtNomeMedico.setText("");
-            txtFcpf.setText("");
-            txtCRMmedico.setText("");
-            comboEspecialidadesMedico.setSelectedIndex(0);
-            comboEspecialidadesMedico2.setSelectedIndex(0);
-            txtEndereco.setText("");
-            txtBairro.setText("");
-            txtComplemento.setText("");
-            txtFnumero.setText("");
-            txtFcep.setText("");
-            txtCidade.setText("");
-            txtFestado.setText("");
-            txtFtelefone1.setText("");
-            txtFtelefone2.setText("");
-            comboTelefone1.setSelectedIndex(0);
-            comboTelefone2.setSelectedIndex(0);
-    
-            txtNomeMedico.requestFocusInWindow();
+        txtNomeMedico.setText("");
+        txtFcpf.setText("");
+        txtCRMmedico.setText("");
+        comboEspecialidadesMedico.setSelectedIndex(0);
+        comboEspecialidadesMedico2.setSelectedIndex(0);
+        txtEndereco.setText("");
+        txtBairro.setText("");
+        txtComplemento.setText("");
+        txtNumero.setText("");
+        txtCep.setText("");
+        txtCidade.setText("");
+        txtEstado.setText("");
+        txtTelefone1.setText("");
+        txtFtelefone2.setText("");
+        comboTelefone1.setSelectedIndex(0);
+        comboTelefone2.setSelectedIndex(0);
+
+        txtNomeMedico.requestFocusInWindow();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtFcpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFcpfActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFcpfActionPerformed
 
-    private void txtFcepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFcepActionPerformed
+    private void txtCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCepActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtFcepActionPerformed
+    }//GEN-LAST:event_txtCepActionPerformed
 
     private void txtComplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComplementoActionPerformed
         // TODO add your handling code here:
@@ -728,15 +750,15 @@ public class CadastroMedico extends javax.swing.JFrame {
     private javax.swing.JLabel lblTelefone2;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCRMmedico;
+    private javax.swing.JFormattedTextField txtCep;
     private javax.swing.JTextField txtCidade;
     private javax.swing.JTextField txtComplemento;
     private javax.swing.JTextField txtEndereco;
-    private javax.swing.JFormattedTextField txtFcep;
+    private javax.swing.JFormattedTextField txtEstado;
     private javax.swing.JFormattedTextField txtFcpf;
-    private javax.swing.JFormattedTextField txtFestado;
-    private javax.swing.JFormattedTextField txtFnumero;
-    private javax.swing.JFormattedTextField txtFtelefone1;
     private javax.swing.JFormattedTextField txtFtelefone2;
     private javax.swing.JTextField txtNomeMedico;
+    private javax.swing.JFormattedTextField txtNumero;
+    private javax.swing.JFormattedTextField txtTelefone1;
     // End of variables declaration//GEN-END:variables
 }
