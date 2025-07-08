@@ -7,6 +7,7 @@ package com.projeto.senac.med.util;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 /**
  *
@@ -18,7 +19,7 @@ public class ValidadorData {
         if (dataStr == null || dataStr.trim().isEmpty()) {
             return false;
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.STRICT);
         try {
             LocalDate.parse(dataStr.trim(), formatter);
             return true;
