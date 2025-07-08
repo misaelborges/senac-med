@@ -98,7 +98,7 @@ public class AgendamentoConsultaDAO {
                     Select consulta.id, consulta.data_ag, consulta.hora, consulta.status_ag, medico.id as medico_id, medico.nome as medico, paciente.id as  paciente_id,paciente.nome as paciente 
                     from consulta 
                     LEFT OUTER JOIN  medico on consulta.id_medico = medico.id
-                    LEFT OUTER JOIN  paciente on consulta.id_paciente = paciente.id;
+                    LEFT OUTER JOIN  paciente on consulta.id_paciente = paciente.id order by data_ag asc, hora asc ;
                     """;
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -178,6 +178,43 @@ public class AgendamentoConsultaDAO {
         return list;
     }
 
+    public AgendamentoConsulta buscaPorId(long idConsulta) throws Exception {
+        AgendamentoConsulta consulta = new AgendamentoConsulta();
+
+        String sql = """
+                    Select * from consulta WHERE id = ?;
+                    """;
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setLong(1, idConsulta);
+            ResultSet resultado = stmt.executeQuery();
+
+            while (resultado.next()) {
+                consulta.setId(resultado.getLong("id"));
+
+                Date dataSql = resultado.getDate("data_ag");
+                if (dataSql != null) {
+                    consulta.setData(dataSql.toLocalDate());
+                } else {
+                    consulta.setData(LocalDate.MAX);
+                }
+
+                Time horaSql = resultado.getTime("hora");
+                if (horaSql != null) {
+                    consulta.setHora(horaSql.toLocalTime());
+                } else {
+                    consulta.setHora(LocalTime.NOON);
+                }
+                consulta.setStatus(resultado.getString("status_ag"));
+                consulta.setIdMedico(resultado.getLong("id_medico"));
+                consulta.setIdPaciente(resultado.getLong("id_paciente"));
+            }
+        } catch (Exception e) {
+            throw new ErroAoListarConsultasException("Erro ao buscar o agendamento por id da consulta...!", e);
+        }
+        return consulta;
+    }
+
     public List<AgendamentoConsultaDTO> listar(LocalDate date) throws Exception {
 
         List<AgendamentoConsultaDTO> list = new ArrayList<>();
@@ -186,7 +223,7 @@ public class AgendamentoConsultaDAO {
                     from consulta 
                     LEFT OUTER JOIN  medico on consulta.id_medico = medico.id
                     LEFT OUTER JOIN  paciente on consulta.id_paciente = paciente.id
-                    WHERE data_ag = ?;
+                    WHERE data_ag = ? order by hora asc ;
                     """;
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -230,7 +267,7 @@ public class AgendamentoConsultaDAO {
                         from consulta 
                         LEFT OUTER JOIN  medico on consulta.id_medico = medico.id
                         LEFT OUTER JOIN  paciente on consulta.id_paciente = paciente.id
-                        WHERE paciente.nome LIKE ?;
+                        WHERE paciente.nome LIKE ? order by data_ag asc, hora asc ;
                      """;
 
         List<AgendamentoConsultaDTO> list = new ArrayList<>();
@@ -278,7 +315,7 @@ public class AgendamentoConsultaDAO {
                     from consulta 
                     LEFT OUTER JOIN  medico on consulta.id_medico = medico.id
                     LEFT OUTER JOIN  paciente on consulta.id_paciente = paciente.id
-                    Where paciente.id = ? ;
+                    Where paciente.id = ? order by data_ag asc, hora asc ;
                     """;
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -323,7 +360,7 @@ public class AgendamentoConsultaDAO {
                     from consulta 
                     LEFT OUTER JOIN  medico on consulta.id_medico = medico.id
                     LEFT OUTER JOIN  paciente on consulta.id_paciente = paciente.id
-                    Where medico.id = ? ;
+                    Where medico.id = ? order by data_ag asc, hora asc ;
                     """;
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -368,7 +405,7 @@ public class AgendamentoConsultaDAO {
                     from consulta 
                     LEFT OUTER JOIN  medico on consulta.id_medico = medico.id
                     LEFT OUTER JOIN  paciente on consulta.id_paciente = paciente.id
-                    Where paciente.id = ? and medico.id = ?;
+                    Where paciente.id = ? and medico.id = ? order by data_ag asc, hora asc ;
                     """;
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -414,7 +451,7 @@ public class AgendamentoConsultaDAO {
                     from consulta 
                     LEFT OUTER JOIN  medico on consulta.id_medico = medico.id
                     LEFT OUTER JOIN  paciente on consulta.id_paciente = paciente.id
-                    Where paciente.id = ? and medico.id = ? and consulta.data_ag = ?;
+                    Where paciente.id = ? and medico.id = ? and consulta.data_ag = ? order by hora asc ;
                     """;
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -545,5 +582,4 @@ public class AgendamentoConsultaDAO {
         return list;
     }
 
-    
 }

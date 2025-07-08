@@ -47,6 +47,7 @@ public class BuscaMedicoAgendamento extends javax.swing.JFrame {
         lblNome = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         btnFiltrar = new javax.swing.JButton();
+        btnCatastraMedico = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaMedico = new javax.swing.JTable();
 
@@ -69,6 +70,15 @@ public class BuscaMedicoAgendamento extends javax.swing.JFrame {
             }
         });
 
+        btnCatastraMedico.setBackground(new java.awt.Color(153, 0, 0));
+        btnCatastraMedico.setMnemonic('C');
+        btnCatastraMedico.setText("Cadastrar Médico");
+        btnCatastraMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCatastraMedicoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -77,10 +87,12 @@ public class BuscaMedicoAgendamento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnFiltrar)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCatastraMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,7 +101,8 @@ public class BuscaMedicoAgendamento extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFiltrar))
+                    .addComponent(btnFiltrar)
+                    .addComponent(btnCatastraMedico))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -152,6 +165,10 @@ public class BuscaMedicoAgendamento extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tabelaMedicoMouseClicked
+
+    private void btnCatastraMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatastraMedicoActionPerformed
+        new CadastroMedico().setVisible(true); // TODO add your handling code here:
+    }//GEN-LAST:event_btnCatastraMedicoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -226,6 +243,7 @@ public class BuscaMedicoAgendamento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCatastraMedico;
     private javax.swing.JButton btnFiltrar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
