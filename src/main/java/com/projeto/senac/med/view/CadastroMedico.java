@@ -251,11 +251,7 @@ public class CadastroMedico extends javax.swing.JFrame {
             }
         });
 
-        try {
-            txtNumero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtNumero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 
         try {
             txtEstado.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UU")));
@@ -525,6 +521,11 @@ public class CadastroMedico extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "O Campo Telefone não pode estar vazio!", "Atenção", 0);
             return;
 
+        }
+        if (!txtNumero.getText().trim().matches("\\d{1,4}")) {
+            JOptionPane.showMessageDialog(null, "Digite de 1 a 4 dígitos numéricos.");
+            txtNumero.requestFocus();
+            return;
         }
 
         try {

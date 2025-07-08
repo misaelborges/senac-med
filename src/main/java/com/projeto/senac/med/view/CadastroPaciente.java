@@ -16,6 +16,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -34,22 +36,22 @@ public class CadastroPaciente extends javax.swing.JFrame {
         initComponents();
         configurarTeclaEnter();
     }
-    
+
     private void configurarTeclaEnter() {
-    txtNomePaciente.addActionListener(e -> txtCpf.requestFocusInWindow());
-    txtCpf.addActionListener(e -> txtDataNasc.requestFocusInWindow());
-    txtDataNasc.addActionListener(e -> txtEndereco.requestFocusInWindow());
-    txtEndereco.addActionListener(e -> txtBairro.requestFocusInWindow());
-    txtBairro.addActionListener(e -> txtComplemento.requestFocusInWindow());
-    txtComplemento.addActionListener(e -> txtNumero.requestFocusInWindow());
-    txtNumero.addActionListener(e -> txtCep.requestFocusInWindow());
-    txtCep.addActionListener(e -> txtCidade.requestFocusInWindow());
-    txtCidade.addActionListener(e -> txtEstado.requestFocusInWindow());
-    txtEstado.addActionListener(e -> txtCelular.requestFocusInWindow());
-    txtCelular.addActionListener(e -> comboBoxTipoTelefone.requestFocusInWindow());
-    comboBoxTipoTelefone.addActionListener(e -> txtContato2.requestFocusInWindow());
-    txtContato2.addActionListener(e -> comboBoxTipoTelefone2.requestFocusInWindow());
-}
+        txtNomePaciente.addActionListener(e -> txtCpf.requestFocusInWindow());
+        txtCpf.addActionListener(e -> txtDataNasc.requestFocusInWindow());
+        txtDataNasc.addActionListener(e -> txtEndereco.requestFocusInWindow());
+        txtEndereco.addActionListener(e -> txtBairro.requestFocusInWindow());
+        txtBairro.addActionListener(e -> txtComplemento.requestFocusInWindow());
+        txtComplemento.addActionListener(e -> txtNumero.requestFocusInWindow());
+        txtNumero.addActionListener(e -> txtCep.requestFocusInWindow());
+        txtCep.addActionListener(e -> txtCidade.requestFocusInWindow());
+        txtCidade.addActionListener(e -> txtEstado.requestFocusInWindow());
+        txtEstado.addActionListener(e -> txtCelular.requestFocusInWindow());
+        txtCelular.addActionListener(e -> comboBoxTipoTelefone.requestFocusInWindow());
+        comboBoxTipoTelefone.addActionListener(e -> txtContato2.requestFocusInWindow());
+        txtContato2.addActionListener(e -> comboBoxTipoTelefone2.requestFocusInWindow());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -282,7 +284,6 @@ public class CadastroPaciente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblNumero)
                             .addComponent(lblBairro))
@@ -445,7 +446,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
             return;
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.STRICT);
 
         try {
             connection.setAutoCommit(false);
@@ -453,7 +454,22 @@ public class CadastroPaciente extends javax.swing.JFrame {
             //paciente
             String nome = txtNomePaciente.getText();
             String cpfComMascara = txtCpf.getText();
-            LocalDate dataNacimento = LocalDate.parse(txtDataNasc.getText(), formatter);
+            String dataStr = txtDataNasc.getText().trim();
+
+            LocalDate dataNacimento;
+
+            try {
+                dataNacimento = LocalDate.parse(dataStr, formatter);
+                if (dataNacimento.isAfter(LocalDate.now())) {
+                    JOptionPane.showMessageDialog(null, "A data de nascimento não pode ser no futuro", "Atenção", 0);
+                    return;
+                }
+
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(null, "Data de nascimento inválida!", "Atenção", 0);
+                return;
+            }
+
             String cpf = cpfComMascara.replaceAll("[^\\d]", ""); // remove tudo oque não for numero
             Paciente paciente = new Paciente(nome, cpf, dataNacimento);
 
@@ -474,7 +490,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
             endereco.setNumero(numero);
             endereco.setBairro(bairro);
             endereco.setCidade(cidade);
-            endereco.setEstado(estado);
+            endereco.setEstado(estado.toUpperCase());
             endereco.setCep(cep);
             endereco.setIdpaciente(paciente.getId());
 
@@ -484,7 +500,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
             //telefone
             String numeroTelefone = txtCelular.getText();
             String numeroTelefone2 = txtContato2.getText();
-            
+
             DefaultComboBoxModel tiposTelefone = (DefaultComboBoxModel) this.comboBoxTipoTelefone.getModel();
             DefaultComboBoxModel tiposTelefone2 = (DefaultComboBoxModel) this.comboBoxTipoTelefone2.getModel();
 
@@ -495,12 +511,12 @@ public class CadastroPaciente extends javax.swing.JFrame {
             telefone.setNumero(numeroTelefone);
             telefone.setTipoTelefone(tipoTelefone.toUpperCase());
             telefone.setIdPaciente(paciente.getId());
-            
+
             Telefone telefone2 = new Telefone();
             telefone2.setNumero(numeroTelefone2);
             telefone2.setTipoTelefone(tipoTelefone2.toUpperCase());
             telefone2.setIdPaciente(paciente.getId());
-            
+
             System.out.println("telefone tipo 1: " + telefone.getTipoTelefone());
             System.out.println("telefone tipo 2: " + telefone2.getTipoTelefone());
 
