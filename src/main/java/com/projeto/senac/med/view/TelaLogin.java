@@ -9,7 +9,7 @@ import com.projeto.senac.med.exception.NegocioException;
 import com.projeto.senac.med.model.Login;
 import com.projeto.senac.med.util.Conexao;
 import java.sql.Connection;
-import java.sql.SQLException;
+import org.mindrot.jbcrypt.BCrypt;
 import javax.swing.JOptionPane;
 
 /**
@@ -190,12 +190,13 @@ public class TelaLogin extends javax.swing.JFrame {
         }
         try {
             String login = txtLogin.getText();
-
-            String senha = new String(txtSenha.getPassword());
-            Login loginObj = new Login(login, senha);
-
+            String senhaDigitada = new String(txtSenha.getPassword());
+            
             LoginDAO loginDAO = new LoginDAO(connection);
-            if (loginDAO.buscar(loginObj)) {
+            
+            String senhaHash = loginDAO.buscarSenhaCriptografada(login); 
+
+            if (BCrypt.checkpw(senhaDigitada, senhaHash)) {
                 new SenacMed().setVisible(true);
                 dispose();
             } else {
