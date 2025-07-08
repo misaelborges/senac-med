@@ -183,6 +183,7 @@ public class Agendamentos extends javax.swing.JFrame {
         ));
         tblAgendametos.setAutoscrolls(false);
         tblAgendametos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tblAgendametos.setRowSelectionAllowed(false);
         tblAgendametos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblAgendametosMouseClicked(evt);
@@ -368,9 +369,9 @@ public class Agendamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPacienteActionPerformed
 
     private void btnBuscaPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaPacienteActionPerformed
-        String nomePaciente = txtPaciente.getText();
+        //String nomePaciente = txtPaciente.getText();
 
-        BuscaPacienteAgendamento buscaPacienteAgendamento = new BuscaPacienteAgendamento(nomePaciente);
+        BuscaPacienteAgendamento buscaPacienteAgendamento = new BuscaPacienteAgendamento();
         buscaPacienteAgendamento.setVisible(true);
 
         buscaPacienteAgendamento.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -393,8 +394,8 @@ public class Agendamentos extends javax.swing.JFrame {
 
 
     private void btnBuscaMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaMedicoActionPerformed
-        String nomeMedico = txtMedico.getText();
-        BuscaMedicoAgendamento buscaMedicoAgendamento = new BuscaMedicoAgendamento(nomeMedico);
+        //String nomeMedico = txtMedico.getText();
+        BuscaMedicoAgendamento buscaMedicoAgendamento = new BuscaMedicoAgendamento();
         buscaMedicoAgendamento.setVisible(true);
 
         buscaMedicoAgendamento.addWindowListener(new java.awt.event.WindowAdapter() {

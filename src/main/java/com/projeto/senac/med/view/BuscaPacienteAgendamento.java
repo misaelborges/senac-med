@@ -29,9 +29,9 @@ public class BuscaPacienteAgendamento extends javax.swing.JFrame {
      *
      * @param nome
      */
-    public BuscaPacienteAgendamento(String nome) {
+    public BuscaPacienteAgendamento() {
         initComponents();
-        txtNome.setText(nome);
+        //txtNome.setText(nome);
     }
 
     /**
@@ -63,6 +63,13 @@ public class BuscaPacienteAgendamento extends javax.swing.JFrame {
 
         lblNome.setText("Nome");
 
+        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNomeKeyPressed(evt);
+            }
+        });
+
+        btnFiltrar.setMnemonic('F');
         btnFiltrar.setText("Filtrar");
         btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +121,7 @@ public class BuscaPacienteAgendamento extends javax.swing.JFrame {
                 "ID", "NOME", "CPF"
             }
         ));
+        tabelaPaciente.setColumnSelectionAllowed(false);
         tabelaPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaPacienteMouseClicked(evt);
@@ -169,6 +177,10 @@ public class BuscaPacienteAgendamento extends javax.swing.JFrame {
     private void btnCadastraPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastraPacienteActionPerformed
         new CadastroPaciente().setVisible(true);  // TODO add your handling code here:
     }//GEN-LAST:event_btnCadastraPacienteActionPerformed
+
+    private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
+        carregaTabela();
+    }//GEN-LAST:event_txtNomeKeyPressed
 
     /**
      * @param args the command line arguments
@@ -234,8 +246,6 @@ public class BuscaPacienteAgendamento extends javax.swing.JFrame {
                      });
                 }
             }
-            txtNome.setText("");
-            txtNome.requestFocus();
         } catch (Exception ex) {
             Logger.getLogger(BuscaPacienteAgendamento.class.getName()).log(Level.SEVERE, null, ex);
         }

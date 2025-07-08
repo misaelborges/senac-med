@@ -97,9 +97,13 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNome">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNomeKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnFiltrar">
           <Properties>
+            <Property name="mnemonic" type="int" value="70"/>
             <Property name="text" type="java.lang.String" value="Filtrar"/>
           </Properties>
           <Events>
@@ -137,6 +141,7 @@
                 <Column editable="true" title="CRM" type="java.lang.Object"/>
               </Table>
             </Property>
+            <Property name="rowSelectionAllowed" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaMedicoMouseClicked"/>
