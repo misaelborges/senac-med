@@ -31,6 +31,7 @@ public class BuscaPacienteAgendamento extends javax.swing.JFrame {
      */
     public BuscaPacienteAgendamento() {
         initComponents();
+        setResizable(false);
         //txtNome.setText(nome);
     }
 

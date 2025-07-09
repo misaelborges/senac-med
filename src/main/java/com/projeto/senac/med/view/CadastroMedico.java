@@ -36,6 +36,7 @@ public class CadastroMedico extends javax.swing.JFrame {
     public CadastroMedico() {
         initComponents();
         configurarTeclaEnter();
+         setResizable(false);
 
         EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
         try {
@@ -235,7 +236,7 @@ public class CadastroMedico extends javax.swing.JFrame {
         }
 
         try {
-            txtFtelefone2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+            txtFtelefone2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -454,14 +455,14 @@ public class CadastroMedico extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -656,6 +657,8 @@ public class CadastroMedico extends javax.swing.JFrame {
         comboTelefone2.setSelectedIndex(0);
 
         txtNomeMedico.requestFocusInWindow();
+        
+        dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtFcpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFcpfActionPerformed

@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.function.Consumer;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,6 +35,7 @@ public class SenacMed extends javax.swing.JFrame {
         initComponents();
         carregarTela();
         instance = this;
+        setResizable(false);
     }
 
     public void carregarTela() {
@@ -319,6 +321,12 @@ public class SenacMed extends javax.swing.JFrame {
         
         DefaultTableModel tableModel = (DefaultTableModel)tblAgendametos.getModel();
         tableModel.setRowCount(0);
+        
+         if (consultaDTOs.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Paciente não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        
         for (AgendamentoConsultaDTO consultaDTO : consultaDTOs) {
                 tableModel.addRow(new Object[]{
                     consultaDTO.getNomeMedico(),

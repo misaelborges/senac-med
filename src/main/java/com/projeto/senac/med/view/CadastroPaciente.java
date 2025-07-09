@@ -35,6 +35,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
 
     public CadastroPaciente() {
         initComponents();
+        setResizable(false);
         configurarTeclaEnter();
     }
 
@@ -230,7 +231,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
         });
 
         try {
-            txtContato2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+            txtContato2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -365,7 +366,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
 
         Painelpaciente.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 720, 320));
 
-        btnSalvar.setBackground(new java.awt.Color(60, 63, 65));
+        btnSalvar.setBackground(new java.awt.Color(204, 204, 204));
         btnSalvar.setText("Cadastrar ");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -374,7 +375,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
         });
         Painelpaciente.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 500, -1, -1));
 
-        btnCancelar.setBackground(new java.awt.Color(60, 63, 65));
+        btnCancelar.setBackground(new java.awt.Color(204, 204, 204));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
