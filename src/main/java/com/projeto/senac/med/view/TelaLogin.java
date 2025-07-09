@@ -6,7 +6,6 @@ package com.projeto.senac.med.view;
 
 import com.projeto.senac.med.dao.LoginDAO;
 import com.projeto.senac.med.exception.NegocioException;
-import com.projeto.senac.med.model.Login;
 import com.projeto.senac.med.util.Conexao;
 import java.sql.Connection;
 import org.mindrot.jbcrypt.BCrypt;

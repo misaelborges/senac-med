@@ -5,17 +5,13 @@
 package com.projeto.senac.med.view;
 
 import com.projeto.senac.med.dao.AgendamentoConsultaDAO;
-import com.projeto.senac.med.dao.MedicoDAO;
-import com.projeto.senac.med.dao.PacienteDAO;
 import com.projeto.senac.med.exception.NegocioException;
 import com.projeto.senac.med.model.AgendamentoConsultaDTO;
-import com.projeto.senac.med.model.Medico;
 import com.projeto.senac.med.util.Conexao;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

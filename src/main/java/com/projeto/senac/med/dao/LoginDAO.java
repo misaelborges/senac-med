@@ -6,7 +6,6 @@ package com.projeto.senac.med.dao;
 
 import com.projeto.senac.med.exception.ErroAoBuscarUsuario;
 import com.projeto.senac.med.exception.ErroAobuscarLoginException;
-import com.projeto.senac.med.util.Conexao;
 import com.projeto.senac.med.model.Login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,22 +23,6 @@ public class LoginDAO {
 
     public LoginDAO(Connection connection) {
         this.connection = connection;
-    }
-
-    public boolean buscar(Login login) throws Exception {
-        Login retornoLogin = new Login();
-        String sql = "Select * from usuario where login = ? and senha = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, login.getLogin());
-        statement.setString(2, login.getSenha());
-
-        ResultSet resultado = statement.executeQuery();
-
-        if (resultado.next()) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public String buscarSenhaCriptografada(String login) {

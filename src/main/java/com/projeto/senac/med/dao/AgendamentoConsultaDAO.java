@@ -9,16 +9,13 @@ import com.projeto.senac.med.exception.ErroAoSalvarAgendamentoException;
 import java.sql.Connection;
 import com.projeto.senac.med.model.AgendamentoConsulta;
 import com.projeto.senac.med.model.AgendamentoConsultaDTO;
-import com.projeto.senac.med.model.Paciente;
 import java.sql.PreparedStatement;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 

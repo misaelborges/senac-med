@@ -8,7 +8,6 @@ import com.projeto.senac.med.exception.ErroAoBuscarMedicoException;
 import com.projeto.senac.med.exception.ErroAoSalvarMedicoException;
 import java.sql.Connection;
 import com.projeto.senac.med.model.Medico;
-import com.projeto.senac.med.model.Paciente;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
