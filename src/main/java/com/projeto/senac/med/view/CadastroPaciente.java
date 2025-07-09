@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
+import java.util.Arrays;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -446,7 +447,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
             return;
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy").withResolverStyle(ResolverStyle.STRICT);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
 
         try {
             connection.setAutoCommit(false);
@@ -467,6 +468,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
 
             } catch (DateTimeParseException e) {
                 JOptionPane.showMessageDialog(null, "Data de nascimento inválida!", "Atenção", 0);
+                e.printStackTrace();
                 return;
             }
 
@@ -516,9 +518,6 @@ public class CadastroPaciente extends javax.swing.JFrame {
             telefone2.setNumero(numeroTelefone2);
             telefone2.setTipoTelefone(tipoTelefone2.toUpperCase());
             telefone2.setIdPaciente(paciente.getId());
-
-            System.out.println("telefone tipo 1: " + telefone.getTipoTelefone());
-            System.out.println("telefone tipo 2: " + telefone2.getTipoTelefone());
 
             TelefoneDAO telefoneDAO = new TelefoneDAO(connection);
             telefoneDAO.salvar(telefone);
