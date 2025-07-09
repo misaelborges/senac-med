@@ -470,10 +470,9 @@ public class Agendamentos extends javax.swing.JFrame {
     private void txtDataFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataFocusLost
         if (!ValidadorData.dataValida(txtData.getText())) {
             JOptionPane.showMessageDialog(null, "A Data é inválida!", "Atenção", 0);
-            carregaTabela();
+            //carregaTabela();
             txtData.requestFocus();
-        } else {
-
+        } else if ((idMedico != null && idMedico != 0)) {
             LocalDate dataDoDia = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataAgendamento = LocalDate.parse(txtData.getText(), formatter);
@@ -485,14 +484,13 @@ public class Agendamentos extends javax.swing.JFrame {
                 txtData.setText("");
                 return;
             }
+            carregaTabela();
+            carregaComboHora();
 
-            if (idMedico != null && idMedico != 0) {
-                carregaTabela();
-                carregaComboHora();
-            } else {
-                carregaTabela();
-            }
+        } else {
+            carregaTabela();
         }
+
     }//GEN-LAST:event_txtDataFocusLost
 
     private void tblAgendametosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAgendametosMouseClicked

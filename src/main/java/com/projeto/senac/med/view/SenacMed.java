@@ -98,8 +98,8 @@ public class SenacMed extends javax.swing.JFrame {
         menuMedico = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -205,8 +205,10 @@ public class SenacMed extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jMenu2.setMnemonic('C');
         jMenu2.setText("Cadastro");
 
+        menuPaciente.setMnemonic('P');
         menuPaciente.setText("Paciente");
         menuPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,7 +217,9 @@ public class SenacMed extends javax.swing.JFrame {
         });
         jMenu2.add(menuPaciente);
 
+        menuMedico.setMnemonic('M');
         menuMedico.setText("Médicos");
+        menuMedico.setToolTipText("");
         menuMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuMedicoActionPerformed(evt);
@@ -225,13 +229,16 @@ public class SenacMed extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setMnemonic('A');
         jMenu3.setText("Agendamentos");
+        jMenu3.setToolTipText("");
         jMenu3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu3ActionPerformed(evt);
             }
         });
 
+        jMenuItem1.setMnemonic('A');
         jMenuItem1.setText("Agendar");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,11 +247,24 @@ public class SenacMed extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem1);
 
-        jMenu4.setText("Buscar Medico");
-        jMenu3.add(jMenu4);
+        jMenuItem2.setMnemonic('M');
+        jMenuItem2.setText("Busca Médico");
+        jMenuItem2.setToolTipText("");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem2);
 
-        jMenu5.setText("Buscar Paciente");
-        jMenu3.add(jMenu5);
+        jMenuItem3.setMnemonic('P');
+        jMenuItem3.setText("Busca Paciente");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
 
         jMenuBar1.add(jMenu3);
 
@@ -310,6 +330,14 @@ public class SenacMed extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_btnBuscaPacienteActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        new BuscaMedicoAgendamento().setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        new BuscaPacienteAgendamento().setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -354,10 +382,10 @@ public class SenacMed extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
